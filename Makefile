@@ -6,14 +6,14 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/01/18 19:10:49 by jcharloi         ###   ########.fr        #
+#    Updated: 2018/01/18 19:55:47 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = GCC
 CFLAGS = -Wall -Wextra -Werror -MMD
 NAME1 = asm
-NAME2 = VMewar
+NAME2 = corewar
 
 ASM_SRC_PATH = ./Project-Asm/sources/
 ASM_SRC_NAME = main.c parsing.c
