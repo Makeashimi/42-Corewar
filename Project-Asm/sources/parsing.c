@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/18 18:54:07 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/18 19:53:38 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 */
 
 #include "asm.h"
+
+int		ft_space(char c)
+{
+	if (c == '\t' || c == ' ')
+		return (1);
+	return (0);
+}
 
 int		is_all_space(char *str)
 {
@@ -52,9 +59,12 @@ void	parse_asm(t_asm *l_asm)
 		tmp = tmp->next;
 	while (ft_iswhitespace(tmp->str[i]) == 1)
 		i++;
-	ft_printf("str : %s\n", tmp->str + i);
+	//ft_printf("str : %s\n", tmp->str + i);
 	if (ft_strncmp(".name", tmp->str + i, 5) != 0)
 		error("Syntax error with the name");
 	while (tmp->str[i] != 'e')
 		i++;
+	ft_printf("str : %s\n", tmp->str + i);
+	if (ft_space(tmp->str[i + 1]) == 0 && tmp->str[i + 1] != '"')
+		error("Syntax error between .name and <name of champ>");
 }
