@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcharloi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/18 18:30:44 by jcharloi         ###   ########.fr       */
+/*   Created: 2018/01/18 17:41:35 by jcharloi          #+#    #+#             */
+/*   Updated: 2018/01/18 17:41:46 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
-
-# include "../../op.h"
-# include "../../libft/libft.h"
-
-typedef struct	s_asm
+int main(void)
 {
-	char			*str;
-	struct s_asm	*next;
-}				t_asm;
-
-void				parse_asm(t_asm *l_asm);
-void				error(char *str);
-
-# endif
+	return (0);
+}
