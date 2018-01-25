@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_name_comment.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/25 14:22:53 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/25 18:48:08 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,6 @@
 */
 
 #include "asm.h"
-
-int		ft_space(char c)
-{
-	if (c == '\t' || c == ' ')
-		return (1);
-	return (0);
-}
-
-int		is_all_space(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (ft_iswhitespace(str[i]) == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 void	next_name(char *str)
 {
@@ -69,7 +48,7 @@ void	next_name(char *str)
 	while (ft_space(str[i]) == 1)
 		i++;
 	if (str[i] != '\0' && str[i] != '#')
-		error("Characteres after <name of champ>");
+		error("Characteres after \"name of champ\"");
 	//ft_printf("i : %c\n", str[i]);
 }
 
@@ -80,49 +59,57 @@ void	next_comment(char *str)
 
 	len = 0;
 	i = 1;
+	//ft_printf("str : %s\n", str + i);
 	while (str[i] != '\0' && str[i] != '"')
 	{
 		i++;
 		len++;
 	}
+	//ft_printf("str : %s\n", str + i);
 	if (str[i] == '\0')
-		error("No champion name");
+		error("No comment");
 	//ft_printf("%d\n", len);
 	if (len > COMMENT_LENGTH)
-		error("Champion name too long (Max lengh : 128)");
+		error("Comment too long (Max lengh : 2048)");
 	i++;
 	while (ft_space(str[i]) == 1)
 		i++;
 	if (str[i] != '\0' && str[i] != '#')
-		error("Characteres after <name of champ>");
+		error("Characteres after \"comment\"");
 	//ft_printf("i : %c\n", str[i]);
 }
 
-void	parse_comment(t_asm *tmp)
+void	check_comment(char *str, int i)
 {
-	int		i;
-
-	i = 0;
-	while (tmp != NULL && is_all_space(tmp->str) == 1)
-		tmp = tmp->next;
-	while (ft_space(tmp->str[i]) == 1)
+	while (str[i] != 't')
 		i++;
-	//ft_printf("str : %s\n", tmp->str + i);
-	if (ft_strncmp(COMMENT_CMD_STRING, tmp->str + i, 8) != 0)
-		error("Syntax error with the .comment");
-	while (tmp->str[i] != 't')
-		i++;
-	if (ft_space(tmp->str[i + 1]) == 0 && tmp->str[i + 1] != '"')
-		error("Syntax error between .comment and <comment of champ>");
+	if (ft_space(str[i + 1]) == 0 && str[i + 1] != '"')
+		error("Syntax error between .comment and \"comment\"");
 	i++;
-	while (ft_space(tmp->str[i]) == 1)
+	while (ft_space(str[i]) == 1)
 		i++;
-	if (tmp->str[i] == '\0' || tmp->str[i] != '"' || tmp->str[i] == '\n')
-		error("Syntax error with the <name of champ> or no <name of champ> found");
-	next_comment(tmp->str + i);
+	if (str[i] == '\0' || str[i] != '"' || str[i] == '\n')
+		error("Syntax error with the \"comment\" or no \"comment\" found");
+	next_comment(str + i);
 }
 
-void	parse_name(t_asm *l_asm)
+void	check_name(char *str, int i)
+{
+	while (str[i] != 'e')
+		i++;
+	//ft_printf("str : %s\n", tmp->str + i);
+	if (ft_space(str[i + 1]) == 0 && str[i + 1] != '"')
+		error("Syntax error between .name and \"name of champ\"");
+	i++;
+	while (ft_space(str[i]) == 1)
+		i++;
+	//ft_printf("str : %s\n", tmp->str + i);
+	if (str[i] == '\0' || str[i] != '"' || str[i] == '\n')
+		error("Syntax error with the \"name of champ\" or no \"name of champ\" found");
+	next_name(str + i);
+}
+
+t_asm	*parse_begin(t_asm *l_asm)
 {
 	t_asm	*tmp;
 	int		i;
@@ -134,19 +121,30 @@ void	parse_name(t_asm *l_asm)
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
 	//ft_printf("str : %s\n", tmp->str + i);
-	if (ft_strncmp(NAME_CMD_STRING, tmp->str + i, 5) != 0)
-		error("Syntax error with the .name");
-	while (tmp->str[i] != 'e')
-		i++;
-	//ft_printf("str : %s\n", tmp->str + i);
-	if (ft_space(tmp->str[i + 1]) == 0 && tmp->str[i + 1] != '"')
-		error("Syntax error between .name and <name of champ>");
-	i++;
-	while (ft_space(tmp->str[i]) == 1)
-		i++;
-	//ft_printf("str : %s\n", tmp->str + i);
-	if (tmp->str[i] == '\0' || tmp->str[i] != '"' || tmp->str[i] == '\n')
-		error("Syntax error with the <name of champ> or no <name of champ> found");
-	next_name(tmp->str + i);
-	parse_comment(tmp->next);
+	if (ft_strncmp(NAME_CMD_STRING, tmp->str + i, ft_strlen(NAME_CMD_STRING)) == 0)
+	{
+		check_name(tmp->str, i);
+		tmp = tmp->next;
+		while (tmp != NULL && is_all_space(tmp->str) == 1)
+			tmp = tmp->next;
+		while (ft_space(tmp->str[i]) == 1)
+			i++;
+		//ft_printf("str : %s\n", tmp->str + i);
+		check_comment(tmp->str, i);
+	}
+	else if (ft_strncmp(COMMENT_CMD_STRING, tmp->str + i, ft_strlen(COMMENT_CMD_STRING)) == 0)
+	{
+		check_comment(tmp->str, i);
+		tmp = tmp->next;
+		while (tmp != NULL && is_all_space(tmp->str) == 1)
+			tmp = tmp->next;
+		while (ft_space(tmp->str[i]) == 1)
+			i++;
+		//ft_printf("str : %s\n", tmp->str + i);
+		check_name(tmp->str, i);
+	}
+	else
+		error("Syntax error with the .name/.comment");
+	tmp = tmp->next;
+	return (tmp);
 }
