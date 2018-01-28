@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/23 16:48:47 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/25 18:42:19 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 int		main(int argc, char **argv)
 {
 	t_asm	*l_asm;
+	t_asm	*tmp;
 	char	*str;
 	int		fd;
 
@@ -64,7 +65,8 @@ int		main(int argc, char **argv)
 		l_asm = link_str(l_asm, str);
 		free(str);
 	}
-	parse_name(l_asm);
+	tmp = parse_begin(l_asm);
+	parse_instructions(tmp);
 	/*while (l_asm != NULL)
 	{
 		ft_printf("asm : %s\n", l_asm->str);

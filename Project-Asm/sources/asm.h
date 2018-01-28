@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/23 11:49:39 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/25 18:49:05 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ typedef struct	s_asm
 	struct s_asm	*next;
 }				t_asm;
 
-void				parse_name(t_asm *l_asm);
+int					ft_space(char c);
+int					is_all_space(char *str);
+t_asm				*parse_begin(t_asm *l_asm);
+void				parse_instructions(t_asm *tmp);
 void				error(char *str);
 
 # endif
