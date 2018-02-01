@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2018/01/18 18:52:49 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/01 20:54:03 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 ** Toutes les tailles sont en octets.
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
+
+#ifndef OP_H
+# define OP_H
 
 #define IND_SIZE				2
 #define REG_SIZE				4
@@ -48,6 +51,26 @@
 #define NBR_LIVE				21
 #define MAX_CHECKS				10
 
+#define	NBR_INSTRUCTIONS		17
+
+/*
+**
+*/
+
+typedef struct		s_op
+{
+	char			*name;
+	int				nb_arg;
+	int				arg[3];
+	int				opcode;
+	int				n_cycle;
+	char			*description;
+	int				carry;
+	int				direct;
+}					t_op;
+
+t_op				g_op_tab[17];
+
 /*
 **
 */
@@ -60,7 +83,7 @@ typedef char	t_arg_type;
 #define T_LAB					8
 
 /*
-**   
+** 
 */
 
 # define PROG_NAME_LENGTH		(128)
@@ -74,3 +97,5 @@ typedef struct		header_s
   unsigned int		prog_size;
   char				comment[COMMENT_LENGTH + 1];
 }					header_t;
+
+# endif
