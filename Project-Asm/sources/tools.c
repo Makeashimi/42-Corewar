@@ -6,11 +6,17 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 18:48:14 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/25 19:07:45 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/03 19:57:00 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void	error(char *str)
+{
+	ft_printf("%s\n", str);
+	exit(-1);
+}
 
 int		ft_space(char c)
 {
@@ -26,15 +32,10 @@ int		is_all_space(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '#')
-		{
-			while (str[i] != '\0' && ft_iswhitespace(str[i]) == 0)
-				i++;
-		}
-		if (str[i] == '\0')
-			break ;
+		if (str[i] == COMMENT_CHAR)
+			return (1);
 		//ft_printf("str : %s\n", str + i);
-		if (ft_iswhitespace(str[i]) == 0)
+		if (ft_space(str[i]) == 0)
 			return (0);
 		i++;
 	}
