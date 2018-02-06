@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:29:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/03 22:09:44 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/05 15:28:59 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		is_instruction(t_asm *l_asm, char *str)
 	return (1);
 }
 
-int 	check_param(char *name, char *tmp)
+int		check_param(char *name, char *tmp)
 {
 	int 	i;
 	int		virgule;
@@ -93,17 +93,17 @@ int 	check_param(char *name, char *tmp)
 			virgule++;
 		i++;
 	}
-	ft_printf("virgule : %d\n", virgule);
+	//ft_printf("virgule : %d\n", virgule);
 	//VERIFIER LA VIRGULE AU BON ENDROIT APRES AVOIR VERIFIÉ QU'ELLE EST APPARU ENTRE CHAQUE INSTRU
 	i = 0;
-
+	ft_printf("%d\n%d\n%d\n", g_op_tab[3].arg[0], g_op_tab[3].arg[1], g_op_tab[3].arg[2]);
 	return (1);
 }
 
 void	parse_instructions(t_asm *l_asm, t_asm *tmp)
 {
 	int		i;
-	int o;
+	int		o;
 
 	o = 0;
 	i = 0;
@@ -116,18 +116,31 @@ void	parse_instructions(t_asm *l_asm, t_asm *tmp)
 	//ft_printf("str       : %s\n", tmp->str + i);
 	while (tmp->str[i] != ':' && ft_space(tmp->str[i]) != 1)
 		i++;
-	ft_printf("str avant : %s\n", tmp->str + i);
+	//ft_printf("str avant : %s\n", tmp->str + i);
 	if (tmp->str[i] == ':')
 	{
 		i++;
-		//IL PEUT Y AVOIR DES ESPACES BLANCS AVANT L"INSTRUCTIOn
-		ft_printf("str apres : %s\n", tmp->str + i);
+		while (ft_space(tmp->str[i]) == 1)
+			i++;
+		if (tmp->str[i] == '\0')
+		{
+			i = 0;
+			tmp = tmp->next;
+		}
+		while (tmp != NULL && is_all_space(tmp->str) == 1)
+		tmp = tmp->next;
+		while (ft_space(tmp->str[i]) == 1)
+			i++;
+		//ft_printf("str dans le label : %s\n", tmp->str + i);
 		if (is_instruction(l_asm, tmp->str + i) == 0)
 			error("Syntax error with the instruction");
+		while (ft_space(tmp->str[i]) == 0)
+			i++;
+		//exit(0);
 	}
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
-	//ft_printf("str : %s\n", tmp->str + i);
+	//ft_printf("str apres : %s\n", tmp->str + i);
 	//ft_printf("l_asm->name_instruction");
 	if (check_param(l_asm->name_instruction, tmp->str + i) == 0)
 		error("Bloublou");
