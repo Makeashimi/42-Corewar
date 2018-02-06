@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/01/18 19:55:47 by jcharloi         ###   ########.fr        #
+#    Updated: 2018/02/01 21:44:07 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME1 = asm
 NAME2 = corewar
 
 ASM_SRC_PATH = ./Project-Asm/sources/
-ASM_SRC_NAME = main.c parsing.c
+ASM_SRC_NAME = main.c parsing_name_comment.c parse.c tools.c
 ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 
@@ -45,19 +45,23 @@ all: creation
 	@make $(NAME1)
 	@make $(NAME2)
 
-$(NAME1): $(ASM_OBJ)
-	@$(CC) -o $(NAME1) $(ASM_OBJ) $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
+$(NAME1): $(ASM_OBJ) op.o
+	@$(CC) -o $(NAME1) $(ASM_OBJ) op.o $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
 	@echo $(GREEN)"Your ./$(NAME1) is ready to work ! ✅"$(EOC)
 
 $(ASM_OBJ_PATH)%.o: $(ASM_SRC_PATH)%.c
 	@$(CC) -o $@ -c $< $(CFLAGS)
 	@echo $(BLUE)"Your $@ is compiled !"$(EOC)
 
-$(NAME2): $(VM_OBJ)
-	@$(CC) -o $(NAME2) $(VM_OBJ) $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
+$(NAME2): $(VM_OBJ) op.o
+	@$(CC) -o $(NAME2) $(VM_OBJ) op.o $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
 	@echo $(GREEN)"Your ./$(NAME2) is ready to work ! ✅"$(EOC)
 
 $(VM_OBJ_PATH)%.o: $(VM_SRC_PATH)%.c
+	@$(CC) -o $@ -c $< $(CFLAGS)
+	@echo $(BLUE)"Your $@ is compiled !"$(EOC)
+
+op.o: op.c
 	@$(CC) -o $@ -c $< $(CFLAGS)
 	@echo $(BLUE)"Your $@ is compiled !"$(EOC)
 
@@ -71,11 +75,14 @@ creation:
 
 -include $(ASM_OBJ:.o=.d)
 -include $(VM_OBJ:.o=.d)
+-include op.o=.dmak
 
 clean:
 	@make clean -C $(LIB_PATH)
 	@rm -rf $(ASM_OBJ_PATH)
 	@rm -rf $(VM_OBJ_PATH)
+	@rm -f op.o
+	@rm -f op.d
 	@echo $(PURPLE)"Make clean done !"$(EOC)
 
 fclean: clean
