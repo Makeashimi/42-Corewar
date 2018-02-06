@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/18 18:14:10 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/23 16:48:47 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,24 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 	return (l_asm);
 }
 
-int		main(void)
+int		main(int argc, char **argv)
 {
 	t_asm	*l_asm;
 	char	*str;
+	int		fd;
 
 	l_asm = NULL;
-	while (get_next_line(0, &str) == 1)
+	if (argc < 2)
+		error("Usage : ./asm <filename.s>");
+	fd = open(argv[argc - 1], O_RDONLY);
+	if (fd == -1)
+		error("Open error");
+	while (get_next_line(fd, &str) == 1)
 	{
 		l_asm = link_str(l_asm, str);
 		free(str);
 	}
-	parse_asm(l_asm);
+	parse_name(l_asm);
 	/*while (l_asm != NULL)
 	{
 		ft_printf("asm : %s\n", l_asm->str);
