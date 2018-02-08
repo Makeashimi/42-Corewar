@@ -21,7 +21,7 @@ ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 
 VM_SRC_PATH = ./Project-VM/sources/
-VM_SRC_NAME = main.c
+VM_SRC_NAME = main.c parse_champ.c init_data.c check.c
 VM_OBJ_PATH = ./Project-VM/objects/
 VM_OBJ_NAME = $(VM_SRC_NAME:.c=.o)
 
