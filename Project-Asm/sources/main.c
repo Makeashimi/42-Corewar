@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/03 18:56:11 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/08 14:30:28 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ void	write_output(char *str)
 
 int		main(int argc, char **argv)
 {
-	t_asm	*l_asm;
-	t_asm	*tmp;
-	char	*str;
-	int		fd;
+	t_instruction	*instruction;
+	t_asm			*l_asm;
+	t_asm			*tmp;
+	char			*str;
+	int				fd;
 
 	l_asm = NULL;
+	instruction = NULL;
 	if (argc < 2)
 		error("Usage : ./asm <filename.s>");
 	fd = open(argv[argc - 1], O_RDONLY);
@@ -73,7 +75,7 @@ int		main(int argc, char **argv)
 		free(str);
 	}
 	tmp = parse_begin(l_asm);
-	parse_instructions(l_asm, tmp);
+	parse_instructions(l_asm, instruction, tmp);
 	write_output(argv[argc - 1]);
 	/*while (l_asm != NULL)
 	{
