@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 22:15:02 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/08 22:43:03 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/09 21:27:35 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	check_reg(char *str)
 		error("Nothing or wrong thing after the 'r' register");
 	if (number > REG_NUMBER || number < 0)
 	{
-		ft_printf("Syntax error, expected a register bigger than -1 and lower than %d", REG_NUMBER + 1);
+		ft_printf(
+		"Syntax error, expected a register bigger than -1 and lower than %d",
+															REG_NUMBER + 1);
 		error("");
 	}
 }
@@ -53,8 +55,6 @@ void	check_dir(char *str)
 			i++;
 		}
 	}
-	else
-	{
-		//comparer les labels
-	}
+	//else
+		//check_label();
 }

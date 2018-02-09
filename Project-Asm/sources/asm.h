@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/08 22:20:26 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/09 21:58:33 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 typedef struct				s_instruction
 {
+	char					*label;
 	char					*name;
 	int						index;
 	char					*param1;
@@ -38,14 +39,17 @@ typedef struct				s_asm
 
 int							ft_space(char c);
 int							is_all_space(char *str);
-t_asm						*parse_begin(t_asm *l_asm);
-void						parse_instructions(t_asm *l_asm, t_instruction
+t_asm						*begin_parse(t_asm *l_asm);
+void						parse_instructions(t_instruction
 												*instruction, t_asm *tmp);
-t_instruction				*link_instruction(t_instruction **instruction,
-													char *str, int len);
-char						*get_last_instru(t_instruction *instruction);
+int							is_label(t_instruction *instruction, char *str);
+int							is_name_instru(t_instruction *instruction,
+																	char *str);
+t_instruction				*link_instruction(t_instruction **instruction);
+int							check_param(t_instruction *instruction, char *tmp);
+t_instruction				*get_last_instru(t_instruction *instruction);
 void						check_reg(char *str);
 void						check_dir(char *str);
 void						error(char *str);
 
-# endif
+#endif
