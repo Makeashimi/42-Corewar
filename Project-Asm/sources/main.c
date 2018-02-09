@@ -6,11 +6,17 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/03 18:56:11 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/09 21:53:39 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void	error(char *str)
+{
+	ft_printf("%s\n", str);
+	exit(-1);
+}
 
 t_asm	*create_str(char *str)
 {
@@ -22,7 +28,7 @@ t_asm	*create_str(char *str)
 	if (!(tmp->str = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1))))
 		error("Malloc error");
 	tmp->str = ft_strcpy(tmp->str, str);
-	return (tmp); 
+	return (tmp);
 }
 
 t_asm	*link_str(t_asm *l_asm, char *str)
@@ -43,7 +49,7 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 
 void	write_output(char *str)
 {
-	char 	*cpy;
+	char	*cpy;
 
 	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1))))
 		error("Malloc error");
@@ -53,12 +59,15 @@ void	write_output(char *str)
 
 int		main(int argc, char **argv)
 {
-	t_asm	*l_asm;
-	t_asm	*tmp;
-	char	*str;
-	int		fd;
+	t_instruction	*cpy;
+	t_instruction	*instruction;
+	t_asm			*l_asm;
+	t_asm			*tmp;
+	char			*str;
+	int				fd;
 
 	l_asm = NULL;
+	instruction = NULL;
 	if (argc < 2)
 		error("Usage : ./asm <filename.s>");
 	fd = open(argv[argc - 1], O_RDONLY);
@@ -72,13 +81,9 @@ int		main(int argc, char **argv)
 		l_asm = link_str(l_asm, str);
 		free(str);
 	}
-	tmp = parse_begin(l_asm);
-	parse_instructions(l_asm, tmp);
+	tmp = begin_parse(l_asm);
+	cpy = link_instruction(&instruction);
+	parse_instructions(cpy, tmp);
 	write_output(argv[argc - 1]);
-	/*while (l_asm != NULL)
-	{
-		ft_printf("asm : %p\n", l_asm);
-		l_asm = l_asm->next;
-	}*/
 	return (0);
 }
