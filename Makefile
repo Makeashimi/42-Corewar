@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/01/18 18:53:01 by jcharloi         ###   ########.fr        #
+#    Updated: 2018/01/18 19:55:47 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 
 VM_SRC_PATH = ./Project-VM/sources/
-VM_SRC_NAME = main.c
+VM_SRC_NAME = main.c parse_champ.c init_data.c check.c list_proc.c
 VM_OBJ_PATH = ./Project-VM/objects/
 VM_OBJ_NAME = $(VM_SRC_NAME:.c=.o)
 
@@ -30,7 +30,7 @@ LIB_NAME = ./libft/libft.a
 PRINT_NAME = ./libft/ft_printf/libftprintf.a
 
 ASM_OBJ = $(addprefix $(ASM_OBJ_PATH),$(ASM_OBJ_NAME))
-VM_OBJ = $(addprefix $(COR_OBJ_PATH),$(COR_OBJ_NAME))
+VM_OBJ = $(addprefix $(VM_OBJ_PATH),$(VM_OBJ_NAME))
 
 YELLOW = "\033[3;38;5;228m"
 ORANGE = "\033[3;38;5;214m"
@@ -53,8 +53,8 @@ $(ASM_OBJ_PATH)%.o: $(ASM_SRC_PATH)%.c
 	@$(CC) -o $@ -c $< $(CFLAGS)
 	@echo $(BLUE)"Your $@ is compiled !"$(EOC)
 
-$(NAME2): $(COR_OBJ)
-	@$(CC) -o $(NAME2) $(COR_OBJ) $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
+$(NAME2): $(VM_OBJ)
+	@$(CC) -o $(NAME2) $(VM_OBJ) $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
 	@echo $(GREEN)"Your ./$(NAME2) is ready to work ! ✅"$(EOC)
 
 $(VM_OBJ_PATH)%.o: $(VM_SRC_PATH)%.c
@@ -67,10 +67,10 @@ creation:
 	@mkdir $(ASM_OBJ_PATH) 2> /dev/null || true
 	@echo $(RED)"Your $(ASM_OBJ_PATH) is (al)ready (ready) to work !"$(EOC)
 	@mkdir $(VM_OBJ_PATH) 2> /dev/null || true
-	@echo $(RED)"Your $(COR_OBJ_PATH) is (al)ready (ready) to work !"$(EOC)
+	@echo $(RED)"Your $(VM_OBJ_PATH) is (al)ready (ready) to work !"$(EOC)
 
 -include $(ASM_OBJ:.o=.d)
--include $(COR_OBJ:.o=.d)
+-include $(VM_OBJ:.o=.d)
 
 clean:
 	@make clean -C $(LIB_PATH)
