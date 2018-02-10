@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/09 21:58:33 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/10 19:12:36 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ t_instruction				*get_last_instru(t_instruction *instruction);
 void						check_reg(char *str, int i, t_instruction *ins);
 void						check_dir(char *str, int i, t_instruction *ins);
 void						error(char *str);
+int							rev_end(int val, char size);
+
+void						wr_header(int fd, t_asm *l_asm);
 
 #endif

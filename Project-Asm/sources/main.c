@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/09 21:53:39 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/10 19:20:54 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,26 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 	return (l_asm);
 }
 
-void	write_output(char *str)
+void	write_output(char *str, t_asm *l_asm)
 {
 	char	*cpy;
+	int		fd;
 
-	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1))))
+	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 5))))
 		error("Malloc error");
 	cpy = strcpy_until(cpy, str, '.');
-	ft_printf("Writing output program to %s.cor\n", cpy);
+	cpy = ft_strcat(cpy, ".cor"); 
+
+	fd = open(cpy, O_RDWR | O_CREAT); 
+	wr_header(fd, l_asm);
+	ft_printf("Writing output program to %s\n", cpy);
 }
 
 int		main(int argc, char **argv)
 {
 	t_instruction	*cpy;
 	t_instruction	*instruction;
+//	t_header		*head;
 	t_asm			*l_asm;
 	t_asm			*tmp;
 	char			*str;
@@ -84,6 +90,6 @@ int		main(int argc, char **argv)
 	tmp = begin_parse(l_asm);
 	cpy = link_instruction(&instruction);
 	parse_instructions(cpy, tmp);
-	write_output(argv[argc - 1]);
+	write_output(argv[argc - 1], l_asm);
 	return (0);
 }
