@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/01/25 19:40:57 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/10 14:04:45 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	wr_ocp(int fd, t_instruction *ins)
 	write(fd, &ocp, 1);
 }
 
+void	wr_param(int fd, t_instruction *ins)
+{
+
+}
+
 void	wr_header(int fd, t_header *h)
 {
 	write(fd, h, sizeof(t_header));
@@ -35,9 +40,9 @@ void	wr_header(int fd, t_header *h)
 
 void	wr_ins(int fd, t_instruction *ins)
 {
-	write(fd, ins->index, 1);
+	write(fd, &(ins->index), 1);
 	if (g_op_tab[ins->index].ocp)
 		wr_ocp(fd, ins);
-	wr_param(int fd, ins);
+	wr_param(fd, ins);
 }
 
