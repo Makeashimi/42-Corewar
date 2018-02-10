@@ -30,10 +30,12 @@ int			check_param(t_instruction *instruction, char *str)
 		if (g_op_tab[instruction->index].arg[i] == T_REG)
 		{
 			//etre au bon endroit
-			check_reg(str);
+			check_reg(str, i, instruction);
 		}
 		else if (g_op_tab[instruction->index].arg[i] == T_DIR)
-			check_dir(str);
+			check_dir(str, i, instruction);
+		else
+			instruction->type[i] = 3;
 		i++;
 	}
 	//enregistrer tout ca apres

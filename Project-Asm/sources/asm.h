@@ -24,10 +24,11 @@ typedef struct				s_instruction
 {
 	char					*label;
 	char					*name;
-	int						index;
+	char					index;
 	char					*param1;
 	char					*param2;
 	char					*param3;
+	char					type[3];
 	struct s_instruction	*next;
 }							t_instruction;
 
@@ -48,8 +49,8 @@ int							is_name_instru(t_instruction *instruction,
 t_instruction				*link_instruction(t_instruction **instruction);
 int							check_param(t_instruction *instruction, char *tmp);
 t_instruction				*get_last_instru(t_instruction *instruction);
-void						check_reg(char *str);
-void						check_dir(char *str);
+void						check_reg(char *str, int i, t_instruction *ins);
+void						check_dir(char *str, int i, t_instruction *ins);
 void						error(char *str);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "asm.h"
 
-void	check_reg(char *str)
+void	check_reg(char *str, int i, t_instruction *instruction)
 {
 	int number;
 
@@ -29,9 +29,10 @@ void	check_reg(char *str)
 															REG_NUMBER + 1);
 		error("");
 	}
+	instruction->type[i] = 1;
 }
 
-void	check_dir(char *str)
+void	check_dir(char *str, int j, t_instruction *instruction)
 {
 	int		i;
 
@@ -57,4 +58,5 @@ void	check_dir(char *str)
 	}
 	//else
 		//check_label();
+	instruction->type[j] = 2;
 }
