@@ -19,7 +19,7 @@ void	wr_ocp(int fd, t_instruction *ins)
 
 	ocp = 0;
 	i = 0;
-	while (i < 3 && ins->type[i] > 0)
+	while (i < 3)
 	{
 		if (ins->type[i] > 0)
 			ocp = (ocp | ins->type[i]);
