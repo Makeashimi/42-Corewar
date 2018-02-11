@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/09 14:28:24 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 13:35:51 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 #include "asm.h"
 
-void	check_len(int len, char c)
+void	check_len(t_asm *l_asm, int len, char c, char *str)
 {
 	if (c == 'e')
 	{
@@ -37,6 +37,10 @@ void	check_len(int len, char c)
 														PROG_NAME_LENGTH);
 			error("");
 		}
+		if (!(l_asm->champname = (char*)malloc(sizeof(char) * (len + 1))))
+			error("Malloc error");
+		l_asm->champname = ft_strncpy(l_asm->champname, str + 1, len);
+		l_asm->champname[len] = '\0';
 	}
 	else if (c == 't')
 	{
@@ -45,10 +49,14 @@ void	check_len(int len, char c)
 			ft_printf("Comment too long (Max lengh : %d)", COMMENT_LENGTH);
 			error("");
 		}
+		if (!(l_asm->comment = (char*)malloc(sizeof(char) * (len + 1))))
+			error("Malloc error");
+		l_asm->comment = ft_strncpy(l_asm->comment, str + 1, len);
+		l_asm->comment[len] = '\0';
 	}
 }
 
-void	check_next_content(char *str, char *message, char c)
+void	check_next_content(t_asm *l_asm, char *str, char *message, char c)
 {
 	int		i;
 	int		len;
@@ -65,7 +73,7 @@ void	check_next_content(char *str, char *message, char c)
 		ft_printf("No \"%s\"", message);
 		error("");
 	}
-	check_len(len, c);
+	check_len(l_asm, len, c, str);
 	i++;
 	while (ft_space(str[i]) == 1)
 		i++;
@@ -76,7 +84,7 @@ void	check_next_content(char *str, char *message, char c)
 	}
 }
 
-void	check_content(char *str, int i, char c, char *message)
+void	check_content(t_asm *l_asm, char *str, int i, char c, char *message)
 {
 	char	*test;
 
@@ -102,32 +110,32 @@ void	check_content(char *str, int i, char c, char *message)
 		error("");
 	}
 	ft_strdel(&test);
-	check_next_content(str + i, message, c);
+	check_next_content(l_asm, str + i, message, c);
 }
 
-t_asm	*is_name_or_comment(t_asm *tmp, int i)
+t_asm	*is_name_or_comment(t_asm *l_asm, t_asm *tmp, int i)
 {
 	if (ft_strncmp(NAME_CMD_STRING, tmp->str + i,
 										ft_strlen(NAME_CMD_STRING)) == 0)
 	{
-		check_content(tmp->str, i, 'e', "name of champ");
+		check_content(l_asm, tmp->str, i, 'e', "name of champ");
 		tmp = tmp->next;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
 			tmp = tmp->next;
 		while (ft_space(tmp->str[i]) == 1)
 			i++;
-		check_content(tmp->str, i, 't', "comment");
+		check_content(l_asm, tmp->str, i, 't', "comment");
 	}
 	else if (ft_strncmp(COMMENT_CMD_STRING, tmp->str + i,
 									ft_strlen(COMMENT_CMD_STRING)) == 0)
 	{
-		check_content(tmp->str, i, 't', "comment");
+		check_content(l_asm, tmp->str, i, 't', "comment");
 		tmp = tmp->next;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
 			tmp = tmp->next;
 		while (ft_space(tmp->str[i]) == 1)
 			i++;
-		check_content(tmp->str, i, 'e', "name of champ");
+		check_content(l_asm, tmp->str, i, 'e', "name of champ");
 	}
 	else
 		error("Syntax error with the .name or .comment");
@@ -145,7 +153,8 @@ t_asm	*begin_parse(t_asm *l_asm)
 		tmp = tmp->next;
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
-	tmp = is_name_or_comment(tmp, i);
+	tmp = is_name_or_comment(l_asm, tmp, i);
+	ft_printf("name : %s et comment : %s\n", l_asm->champname, l_asm->comment);
 	tmp = tmp->next;
 	return (tmp);
 }
