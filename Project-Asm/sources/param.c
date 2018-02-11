@@ -6,64 +6,89 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 22:15:02 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 16:33:12 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 20:27:43 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	check_reg(t_instruction *instruction, char *str, int i)
+int		check_reg(t_instruction *instruction, char *str, int i)
 {
 	int number;
 
 	if (str[0] != 'r')
-		error("Syntax error with the register of the param, expected 'r'");
+		return (0);
 	number = ft_atoi(str + 1);
-	ft_printf("number : %d\n", number);
 	if (number == 0)
-		error("Nothing or wrong thing after the 'r' register");
+		return (0);
 	if (number > REG_NUMBER || number < 0)
-	{
-		ft_printf(
-		"Syntax error, expected a register bigger than -1 and lower than %d",
-															REG_NUMBER + 1);
-		error("");
-	}
+		return (0);
 	instruction->param[i] = ft_strdup(ft_itoa(number));
-	ft_printf("str apres : %s\n", instruction->param[i]);
+	//ft_printf("REGISTRE : instruction->param[i] : %s\n", instruction->param[i]);
+	instruction->type[i] = REG_CODE;
+	return (1);
 }
 
-void	check_dir(t_instruction *instruction, char *str, int i)
+int		check_dir_ind(char *str)
 {
-	int		j;
-	int		count;
+	int		i;
+	int 	count;
 
-	j = 1;
+	i = 0;
 	count = 0;
-	ft_printf("str %s\n", str);
-	if (str[0] != DIRECT_CHAR)
+	if (str[i] != LABEL_CHAR && ft_isdigit(str[i]) == 0)
+		return (0);
+	if (ft_isdigit(str[i]) == 1)
 	{
-		ft_printf("Syntax error, expected %c to begin", DIRECT_CHAR);
-		error("");
-	}
-	if (str[1] != LABEL_CHAR && ft_isdigit(str[1]) == 0)
-	{
-		ft_printf("Nothing or wrong thing after the %c", DIRECT_CHAR);
-		error("");
-	}
-	if (ft_isdigit(str[1]) == 1)
-	{
-		while (str[j] != '\0' && ft_space(str[j]) == 0)
+		while (str[i] != '\0' && ft_space(str[i]) == 0 && str[i] != SEPARATOR_CHAR)
 		{
-			if (ft_isdigit(str[j]) == 0)
-				error("Syntax error with the direct param");
-			j++;
+			if (ft_isdigit(str[i]) == 0)
+				return (0);
+			i++;
 			count++;
 		}
 	}
-	//else
-		//check_label(str + j, count);
-	ft_printf("count : %d\n", count);
-	instruction->param[i] = ft_strdup(str + 1);
-	ft_printf("str apres : %s\n", instruction->param[i]);
+	else
+	{
+		count = 5;
+		//count = check_label(str + j, count);
+	}
+	return (count);
+}
+
+int		check_dir(t_instruction *instruction, char *str, int i)
+{
+	int		count;
+
+	count = 0;
+	if (str[0] != DIRECT_CHAR)
+		return (0);
+	count = check_dir_ind(str + 1);
+	if (count == 0)
+		return (0);
+	//ft_printf("count : %d\n", count);
+	if (!(instruction->param[i] = (char *)malloc(sizeof(char) * (count + 1))))
+		error("Malloc error");
+	instruction->param[i] = ft_strncpy(instruction->param[i], str + 1, count);
+	instruction->param[i][count] = '\0';
+	//ft_printf("DIRECT : instruction->param[i] : %s\n", instruction->param[i]);
+	instruction->type[i] = DIR_CODE;
+	return (1);
+}
+
+int		check_ind(t_instruction *instruction, char *str, int i)
+{
+	int		count;
+
+	count = check_dir_ind(str);
+	if (count == 0)
+		return (0);
+	//ft_printf("count : %d\n", count);
+	if (!(instruction->param[i] = (char *)malloc(sizeof(char) * (count + 1))))
+		error("Malloc error");
+	instruction->param[i] = ft_strncpy(instruction->param[i], str, count);
+	instruction->param[i][count] = '\0';
+	//ft_printf("INDIRECT : instruction->param[i] : %s\n", instruction->param[i]);
+	instruction->type[i] = IND_CODE;
+	return (1);
 }

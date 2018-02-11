@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 16:21:12 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 17:27:24 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ int							is_name_instru(t_instruction *instruction,
 t_instruction				*link_instruction(t_instruction **instruction);
 int							check_param(t_instruction *instruction, char *tmp);
 t_instruction				*get_last_instru(t_instruction *instruction);
-void						check_reg(t_instruction *instruction, char *str, int i);
-void						check_dir(t_instruction *instruction, char *str, int i);
+int							check_reg(t_instruction *instruction, char *str, int i);
+int							check_dir(t_instruction *instruction, char *str, int i);
+int							check_ind(t_instruction *instruction, char *str, int i);
 void						error(char *str);
 
 #endif
