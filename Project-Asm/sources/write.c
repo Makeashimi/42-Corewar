@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/11 16:02:24 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/11 16:10:07 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	wr_ocp(int fd, t_instruction *ins)
 		ocp = ocp << 2;
 		i++;
 	}
-	ft_printf("DEBUG - ocp = %0x\n", ocp);
 	write(fd, &ocp, 1);
 }
 
@@ -37,12 +36,9 @@ void	wr_param(int fd, t_instruction *ins)
 	(void)ins;
 
 	i = 0;
-	while (i < 3)
+	while (ins->type[i] > 0)
 	{
-		if (ins->type[i] > 0)
-		{
-			
-		}
+		
 		i++;
 	}
 }
