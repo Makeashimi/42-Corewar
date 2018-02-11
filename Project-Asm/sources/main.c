@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/10 19:20:54 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/11 15:04:21 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 	return (l_asm);
 }
 
-void	write_output(char *str, t_asm *l_asm)
+void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 {
 	char	*cpy;
 	int		fd;
@@ -59,6 +59,7 @@ void	write_output(char *str, t_asm *l_asm)
 
 	fd = open(cpy, O_RDWR | O_CREAT); 
 	wr_header(fd, l_asm);
+	wr_ins(fd, ins);
 	ft_printf("Writing output program to %s\n", cpy);
 }
 
@@ -90,6 +91,6 @@ int		main(int argc, char **argv)
 	tmp = begin_parse(l_asm);
 	cpy = link_instruction(&instruction);
 	parse_instructions(cpy, tmp);
-	write_output(argv[argc - 1], l_asm);
+	write_output(argv[argc - 1], l_asm, instruction);
 	return (0);
 }

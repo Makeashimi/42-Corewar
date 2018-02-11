@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2018/02/09 13:10:37 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/10 16:00:35 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,6 @@ typedef struct					s_op
 }								t_op;
 
 t_op							g_op_tab[17];
-
-typedef struct		s_op
-{
-	char			*name;
-	char			nb_param;
-	t_arg_type		type;
-	char			op_code;
-	char			nb_cycle;
-	char			*comment;
-	char			ocp;
-	char			short_dir;
-}					t_op;
 
 # define T_REG					1
 # define T_DIR					2

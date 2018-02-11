@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/10 19:20:43 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/11 16:02:24 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	wr_ocp(int fd, t_instruction *ins)
 		if (ins->type[i] > 0)
 			ocp = (ocp | ins->type[i]);
 		ocp = ocp << 2;
+		i++;
 	}
+	ft_printf("DEBUG - ocp = %0x\n", ocp);
 	write(fd, &ocp, 1);
 }
 
@@ -37,7 +39,11 @@ void	wr_param(int fd, t_instruction *ins)
 	i = 0;
 	while (i < 3)
 	{
-	
+		if (ins->type[i] > 0)
+		{
+			
+		}
+		i++;
 	}
 }
 
@@ -45,26 +51,36 @@ void	wr_header(int fd, t_asm *l_asm)
 {
 	t_header h;
 
+	bzero(&h, sizeof(h));
 	h.magic = rev_end(COREWAR_EXEC_MAGIC, 4);
-	bzero(h.prog_name, PROG_NAME_LENGTH + 1);
-	bzero(h.comment, COMMENT_LENGTH + 1);
 	h.prog_size = rev_end(23, 4);
-	while (l_asm)
-	{
-		ft_printf("%s\n", l_asm->str);
-		l_asm = l_asm->next;
-	}
+	ft_printf("DEBUG - prog_name : \"%s\". \n", l_asm->champname);
+	ft_printf("DEBUG - comment : \"%s\". \n", l_asm->comment);
+	ft_strcpy(h.prog_name, l_asm->champname);
+	ft_strcpy(h.comment, l_asm->comment);
 	write(fd, &h, sizeof(t_header));
 }
 
 void	wr_ins(int fd, t_instruction *ins)
 {
+	int	opcode;
+	/* DEBUG */
+	ins->type[0] = REG_CODE;
+	ins->type[1] = DIR_CODE;
+	ins->type[2] = DIR_CODE;
+	ins->param1 = ft_strdup("1");
+	ins->param2 = ft_strdup(":live");
+	ins->param3 = ft_strdup("1");
+	/* DEBUG */
 	while (ins)
 	{
-		write(fd, &(ins->index), 1);
+		opcode = ins->index + 1;
+		write(fd, &(opcode), 1);
+		ft_printf("DEBUG - opcode = %d\n", ins->index);
 		if (g_op_tab[(int)(ins->index)].ocp)
 			wr_ocp(fd, ins);
 //		wr_param(fd, ins);
+		ins = ins->next;
 	}
 }
 

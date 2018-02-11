@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 13:35:51 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:51:21 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ t_asm	*begin_parse(t_asm *l_asm)
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
 	tmp = is_name_or_comment(l_asm, tmp, i);
-	ft_printf("name : %s et comment : %s\n", l_asm->champname, l_asm->comment);
 	tmp = tmp->next;
 	return (tmp);
 }

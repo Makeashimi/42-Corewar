@@ -6,7 +6,7 @@
 /*   By: jcharloi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 17:41:35 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/18 17:41:46 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/10 16:46:33 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int main(int ac, char **av)
 	printf("%d\n", i);
 	memcpy(tab, &champ[n], ((size_t)i - n));
 	print_memory(tab, 4096);
->>>>>>> eccfa323a26304f157248a6d6f1399c7ba7e2d17
 	return (0);
 }
 
@@ -144,7 +143,7 @@ void 	print_tab(const void *addr, size_t size)
 	}
 }
 
-int main(int ac, char **av)
+/*int main(int ac, char **av)
 {
 	t_data	*data;
 
@@ -157,4 +156,4 @@ int main(int ac, char **av)
 	init_champ(data);
 	print_tab(data->arene, 4096);
 	return (0);
-}
+}*/
