@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/09 21:53:39 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 13:40:49 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		main(int argc, char **argv)
 		free(str);
 	}
 	tmp = begin_parse(l_asm);
+	ft_printf("name : %s et comment : %s\n", l_asm->champname, l_asm->comment);
 	cpy = link_instruction(&instruction);
 	parse_instructions(cpy, tmp);
 	write_output(argv[argc - 1]);

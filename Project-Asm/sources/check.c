@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/09 22:09:23 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 16:31:11 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,28 @@ int			check_param(t_instruction *instruction, char *str)
 {
 	ft_printf("l'instruction : %s\nsur son lit de label : %s\n%d\n%d\n%d\n",
 	instruction->name, instruction->label,
-	g_op_tab[instruction->index].arg[0],
-	g_op_tab[instruction->index].arg[1],
-	g_op_tab[instruction->index].arg[2]);
+	g_op_tab[(int)instruction->index].arg[0],
+	g_op_tab[(int)instruction->index].arg[1],
+	g_op_tab[(int)instruction->index].arg[2]);
 
-	char				*name;
+	//char				*name;
 	int					i;
 
 	i = 0;
-	name = instruction->name;
-	while (i < g_op_tab[instruction->index].nb_param)
-	{
-		if (g_op_tab[instruction->index].arg[i] == T_REG)
-		{
-			//etre au bon endroit
-			check_reg(str);
-		}
-		else if (g_op_tab[instruction->index].arg[i] == T_DIR)
-			check_dir(str);
-		i++;
-	}
+	check_dir(instruction, str, i);
+	//check_reg(instruction, str, i);
+	//name = instruction->name;
+	//while (i < g_op_tab[(int)instruction->index].nb_param)
+	//{
+		// if (g_op_tab[(int)instruction->index].arg[i] == T_REG)
+		// {
+		// 	//etre au bon endroit
+		// 	check_reg(instruction, str, i);
+		// }
+		// else if (g_op_tab[(int)instruction->index].arg[i] == T_DIR)
+		// 	check_dir(instruction, str, i);
+		//i++;
+	//}
 	//enregistrer tout ca apres
 	return (1);
 }
