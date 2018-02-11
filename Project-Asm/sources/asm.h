@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/10 19:12:36 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:35:43 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct				s_instruction
 typedef struct				s_asm
 {
 	char					*str;
+	char					*champname;
+	char					*comment;
 	struct s_asm			*next;
 }							t_asm;
 
