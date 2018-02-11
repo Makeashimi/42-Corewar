@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/10 16:43:47 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/11 16:39:23 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ int			check_param(t_instruction *instruction, char *str)
 	g_op_tab[(int)instruction->index].arg[1],
 	g_op_tab[(int)instruction->index].arg[2]);
 
-	char				*name;
+	//char				*name;
 	int					i;
 
 	i = 0;
-	name = instruction->name;
-	while (i < g_op_tab[(int)instruction->index].nb_param)
-	{
-		if (g_op_tab[(int)instruction->index].arg[i] == T_REG)
-		{
-			//etre au bon endroit
-			check_reg(str, i, instruction);
-		}
-		else if (g_op_tab[(int)instruction->index].arg[i] == T_DIR)
-			check_dir(str, i, instruction);
-		else
-			instruction->type[i] = 3;
-		i++;
-	}
+	check_dir(instruction, str, i);
+	//check_reg(instruction, str, i);
+	//name = instruction->name;
+	//while (i < g_op_tab[(int)instruction->index].nb_param)
+	//{
+		// if (g_op_tab[(int)instruction->index].arg[i] == T_REG)
+		// {
+		// 	//etre au bon endroit
+		// 	check_reg(instruction, str, i);
+		// }
+		// else if (g_op_tab[(int)instruction->index].arg[i] == T_DIR)
+		// 	check_dir(instruction, str, i);
+		//i++;
+	//}
 	//enregistrer tout ca apres
 	return (1);
 }

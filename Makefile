@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/02/10 16:41:19 by varichar         ###   ########.fr        #
+#    Updated: 2018/02/11 17:01:54 by varichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ ASM_SRC_NAME =	check.c\
 				parsing_instructions.c\
 				parsing_name_comment.c\
 				tools.c\
-				write.c
+				write.c\
+				size.c
 ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 

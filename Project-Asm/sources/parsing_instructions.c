@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:29:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/09 22:28:20 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 16:12:36 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 ** 	 T_DIR ou T_IND needed
 ** else if (g_op_tab[instruction->index].arg[0] == 7)
 **	 T_DIR OU T_REG OU T_IND needed
+** instruction->param[1] = 1;
+** instruction->param[2] = :live;
+** instruction->param[3] = 0;
 */
 
 char	*move_to_param(char *str)
