@@ -6,12 +6,13 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/12 22:45:03 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/12 22:58:14 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
+/* DEBUG */
 t_instruction *debug_ins(void)
 {
 	t_instruction *ret;
@@ -58,6 +59,7 @@ t_instruction *debug_ins(void)
 
 	return (ret);
 }
+/* DEBUG */
 
 int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 		int i)
@@ -67,13 +69,13 @@ int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 	addr = 0;
 	while (start)
 	{
-		ft_printf("DEBUG - %s\n",label);
 		if (start->label && ft_strcmp(start->label, label) == 0)
 		{
 			if (start->address > ins->address)
 			{
-				addr = rev_end(start->address - ins->address, (ins->type[i] == 2 &&\
-						 !g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2);
+				addr = rev_end(start->address - ins->address, (ins->type[i] ==\
+							2 && !g_op_tab[(int)(ins->index)].short_dir) ? 4 :\
+						2);
 			}
 			else
 				addr = rev_end(start->address - ins->address, 4) >> 16;
@@ -110,7 +112,6 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 	i = 0;
 	while (ins->param[i] && i < 3)
 	{
-		ft_printf("DEBUG - param[i] = \"%s\"\n", ins->param[i]);
 		if (ins->type[i] == 1)
 		{
 			wr = (char)ft_atoi(ins->param[i]);
@@ -118,8 +119,7 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 		}
 		else if (ins->param[i][0] == ':')
 		{
-			wr = get_label_addr(start, ins, &(ins->param[i][1]), i); //(ins->type[i] == 2 &&\
-					 //!g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2);
+			wr = get_label_addr(start, ins, &(ins->param[i][1]), i);
 			l = (ins->type[i] == 2 &&\
 					!g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2;
 		}
@@ -130,7 +130,6 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 			l = (ins->type[i] == 2 &&\
 					!g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2;
 		}
-		ft_printf("DEBUG - %0x\n", wr);
 		write(fd, &wr, l);
 		i++;
 	}
@@ -154,23 +153,11 @@ void	wr_ins(int fd, t_instruction *ins)
 {
 	int	opcode;
 	t_instruction *start;
-//	ins = debug_ins();
-	/* DEBUG 
-	ins->type[0] = REG_CODE;
-	ins->type[1] = DIR_CODE;
-	ins->type[2] = DIR_CODE;
-	ins->param[0]= ft_strdup("1");
-	ins->param[1] = ft_strdup(":live");
-	ins->param[2] = ft_strdup("1");
-	 DEBUG */
-//	assign_size_ins(ins);
 	start = ins;
 	while (ins)
 	{
-		ft_printf("DEBUG - address ins : %d\n", ins->address);
 		opcode = ins->index + 1;
 		write(fd, &(opcode), 1);
-		ft_printf("DEBUG - opcode = %d\n", ins->index + 1);
 		if (g_op_tab[(int)(ins->index)].ocp)
 			wr_ocp(fd, ins);
 		wr_param(fd, start, ins);
