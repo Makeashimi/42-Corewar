@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/12 20:02:46 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/12 22:45:03 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 						 !g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2);
 			}
 			else
-				addr = rev_end(start->address - ins->address, 4);
-			return (start->address - ins->address);
+				addr = rev_end(start->address - ins->address, 4) >> 16;
+			return (addr);
 		}
 		start = start->next;
 	}
@@ -136,13 +136,15 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 	}
 }
 
-void	wr_header(int fd, t_asm *l_asm)
+void	wr_header(int fd, t_asm *l_asm, t_instruction *start)
 {
 	t_header h;
 
 	bzero(&h, sizeof(h));
 	h.magic = rev_end(COREWAR_EXEC_MAGIC, 4);
-	h.prog_size = rev_end(23, 4);
+	while (start->next)
+		start = start->next;
+	h.prog_size = rev_end(start->address + start->size, 4);
 	ft_strcpy(h.prog_name, l_asm->champname);
 	ft_strcpy(h.comment, l_asm->comment);
 	write(fd, &h, sizeof(t_header));
@@ -152,7 +154,7 @@ void	wr_ins(int fd, t_instruction *ins)
 {
 	int	opcode;
 	t_instruction *start;
-	ins = debug_ins();
+//	ins = debug_ins();
 	/* DEBUG 
 	ins->type[0] = REG_CODE;
 	ins->type[1] = DIR_CODE;
@@ -161,7 +163,7 @@ void	wr_ins(int fd, t_instruction *ins)
 	ins->param[1] = ft_strdup(":live");
 	ins->param[2] = ft_strdup("1");
 	 DEBUG */
-	assign_size_ins(ins);
+//	assign_size_ins(ins);
 	start = ins;
 	while (ins)
 	{

@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/12 18:29:14 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/12 22:44:19 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,12 @@ int							check_ind(t_instruction *instruction, char *str, int i);
 void						error(char *str);
 int							rev_end(int val, char size);
 
-void						wr_header(int fd, t_asm *l_asm);
+void						wr_header(int fd, t_asm *l_asm, t_instruction *ins);
 void						wr_ins(int fd, t_instruction *ins);
 void						assign_size_ins(t_instruction *ins);
+
+
+/* DEBUG */
+t_instruction				*debug_ins(void);
 
 #endif
