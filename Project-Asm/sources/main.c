@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/12 18:28:39 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/12 18:53:11 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	cpy = strcpy_until(cpy, str, '.');
 	cpy = ft_strcat(cpy, ".cor");
 
-	fd = open(cpy, O_RDWR | O_CREAT); 
-	//wr_header(fd, l_asm);
-	//wr_ins(fd, ins);
+	fd = open(cpy, O_RDWR | O_CREAT | O_TRUNC, 644); 
+	wr_header(fd, l_asm);
+	wr_ins(fd, ins);
 	ft_printf("Writing output program to %s\n", cpy);
 }
 

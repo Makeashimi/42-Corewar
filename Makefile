@@ -6,12 +6,13 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/02/11 17:01:54 by varichar         ###   ########.fr        #
+#    Updated: 2018/02/12 18:35:34 by varichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = GCC
-CFLAGS = -Wall -Wextra -Werror -MMD
+DEBUGFLAGS = -ggdb
+CFLAGS = -Wall -Wextra -Werror -MMD $(DEBUGFLAGS)
 NAME1 = asm
 NAME2 = corewar
 
