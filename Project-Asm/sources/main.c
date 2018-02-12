@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 17:09:43 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/12 18:28:39 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,16 @@ void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	char	*cpy;
 	int		fd;
 
+	(void)ins;
+	(void)l_asm;
 	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 5))))
 		error("Malloc error");
 	cpy = strcpy_until(cpy, str, '.');
-	cpy = ft_strcat(cpy, ".cor"); 
+	cpy = ft_strcat(cpy, ".cor");
 
 	fd = open(cpy, O_RDWR | O_CREAT); 
-	wr_header(fd, l_asm);
-	wr_ins(fd, ins);
+	//wr_header(fd, l_asm);
+	//wr_ins(fd, ins);
 	ft_printf("Writing output program to %s\n", cpy);
 }
 
@@ -89,10 +91,15 @@ int		main(int argc, char **argv)
 		free(str);
 	}
 	tmp = begin_parse(l_asm);
-	ft_printf("name : %s et comment : %s\n", l_asm->champname, l_asm->comment);
+	//ft_printf("name : %s et comment : %s\n", l_asm->champname, l_asm->comment);
 	cpy = link_instruction(&instruction);
 	parse_instructions(cpy, tmp);
-	//assign_size_ins(instruction);
+	ft_printf("PREMIER PARAM : instruction->type[0] : %d\n", instruction->type[0]);
+	ft_printf("PREMIER PARAM : instruction->param[0] : %s\n", instruction->param[0]);
+	ft_printf("DEUXIEME PARAM : instruction->type[1] : %d\n", instruction->type[1]);
+	ft_printf("DEUXIEME PARAM : instruction->param[1] : %s\n", instruction->param[1]);
+	ft_printf("TROISIEME PARAM : instruction->type[2] : %d\n", instruction->type[2]);
+	ft_printf("TROISIEME PARAM : instruction->param[2] : %s\n", instruction->param[2]);
 	write_output(argv[argc - 1], l_asm, instruction);
 	return (0);
 }

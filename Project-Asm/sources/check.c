@@ -6,39 +6,138 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 16:39:23 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/12 18:29:30 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int			check_param(t_instruction *instruction, char *str)
-{
-	ft_printf("l'instruction : %s\nsur son lit de label : %s\n%d\n%d\n%d\n",
-	instruction->name, instruction->label,
-	g_op_tab[(int)instruction->index].arg[0],
-	g_op_tab[(int)instruction->index].arg[1],
-	g_op_tab[(int)instruction->index].arg[2]);
+/*
+** T_REG -> 1
+** T_DIR -> 2
+** T_DIR ou T_REG -> 3
+** (NEVER APPEARED)T_IND -> 4
+** T_REG ou T_IND -> 5
+** T_DIR ou T_IND -> 6
+** T_DIR ou T_REG ou T_IND -> 7
+** ------------------------
+** if (g_op_tab[instruction->index].arg[0] == 1)
+**	 T_REG needed
+** else if (g_op_tab[instruction->index].arg[0] == 2)
+** 	 T_DIR needed
+** else if (g_op_tab[instruction->index].arg[0] == 3)
+** 	 T_DIR OU T_REG needed
+** else if (g_op_tab[instruction->index].arg[0] == 5)
+** 	 T_REG ou T_IND needed
+** else if (g_op_tab[instruction->index].arg[0] == 6)
+** 	 T_DIR ou T_IND needed
+** else if (g_op_tab[instruction->index].arg[0] == 7)
+**	 T_DIR OU T_REG OU T_IND needed
+** instruction->param[1] = 1;
+** instruction->param[2] = 0 ou :live;
+** instruction->param[3] = 0 ou :live;
+*/
 
-	//char				*name;
-	int					i;
+char		*move_str(char *str, int virgule)
+{
+	int		i;
 
 	i = 0;
-	check_dir(instruction, str, i);
-	//check_reg(instruction, str, i);
-	//name = instruction->name;
-	//while (i < g_op_tab[(int)instruction->index].nb_param)
-	//{
-		// if (g_op_tab[(int)instruction->index].arg[i] == T_REG)
-		// {
-		// 	//etre au bon endroit
-		// 	check_reg(instruction, str, i);
-		// }
-		// else if (g_op_tab[(int)instruction->index].arg[i] == T_DIR)
-		// 	check_dir(instruction, str, i);
-		//i++;
-	//}
-	//enregistrer tout ca apres
+	while (str[i] != '\0' && str[i] != SEPARATOR_CHAR)
+		i++;
+	if (str[i] == '\0' && virgule > 3)
+		error("Syntax error with the parameters");
+	i++;
+	return (str + i);
+}
+
+int			check_param(t_instruction *instruction, char *str)
+{
+	// ft_printf("l'instruction : %s\nsur son lit de label : %s\n%d\n%d\n%d\n",
+	// instruction->name, instruction->label,
+	// g_op_tab[(int)instruction->index].arg[0],
+	// g_op_tab[(int)instruction->index].arg[1],
+	// g_op_tab[(int)instruction->index].arg[2]);
+	int		i;
+	//int		virgule;
+
+	i = 0;
+	//virgule = 0;
+	while (i < g_op_tab[(int)instruction->index].nb_param)
+	{
+		if (g_op_tab[(int)instruction->index].arg[i] == T_REG)
+		{
+
+			if (check_reg(instruction, str, i) == 0)
+			{
+				ft_printf("Invalid parameter for %s instruction", instruction->name);
+				error("");
+			}
+		}
+		else if (g_op_tab[(int)instruction->index].arg[i] == T_DIR)
+		{
+			
+			if (check_dir(instruction, str, i) == 0)
+			{
+				ft_printf("Invalid parameter for %s instruction", instruction->name);
+				error("");
+			}
+		}
+		else if (g_op_tab[(int)instruction->index].arg[i] == T_IND)
+		{
+			
+			if (check_ind(instruction, str, i) == 0)
+			{
+				ft_printf("Invalid parameter for %s instruction", instruction->name);
+				error("");
+			}
+		}
+		else if (g_op_tab[(int)instruction->index].arg[i] == (T_REG + T_DIR))
+		{
+			//T_DIR ou T_REG needed
+			if (check_dir(instruction, str, i) == 0 && check_reg(instruction, str, i) == 0)
+			{
+				ft_printf("Invalid parameter for %s instruction", instruction->name);
+				error("");
+			}
+		}
+		else if (g_op_tab[(int)instruction->index].arg[i] == (T_REG + T_IND))
+		{
+			//T_REG ou T_IND needed
+			if (check_reg(instruction, str, i) == 0 && check_ind(instruction, str, i) == 0)
+			{
+				ft_printf("Invalid parameter for %s instruction", instruction->name);
+				error("");
+			}
+		}
+		else if (g_op_tab[(int)instruction->index].arg[i] == (T_DIR + T_IND))
+		{
+			//T_DIR ou T_IND needed
+			if (check_dir(instruction, str, i) == 0 && check_ind(instruction, str, i) == 0)
+			{
+				ft_printf("Invalid parameter for %s instruction", instruction->name);
+				error("");
+			}
+		}
+		else if (g_op_tab[(int)instruction->index].arg[i] == (T_REG + T_DIR + T_IND))
+		{
+			//T_DIR OU T_REG OU T_IND needed
+			if (check_reg(instruction, str, i) == 0 && check_dir(instruction, str, i) == 0 && check_ind(instruction, str, i) == 0)
+			{
+				ft_printf("Invalid parameter for %s instruction", instruction->name);
+				error("");
+			}
+		}
+		str = move_str(str, 0);//mettre str au bon endroit
+		//PARSING DE LA VIRGULE ICI
+		i++;
+	}
+	//ft_printf("virgule : %d et i : %d\n", virgule, i);
+	// if (virgule > i)
+	// {
+	// 	ft_printf("Too much %c", SEPARATOR_CHAR);
+	// 	error("");
+	// }
 	return (1);
 }
 

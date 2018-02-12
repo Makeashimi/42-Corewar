@@ -6,37 +6,11 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:29:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 16:12:36 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/11 17:46:59 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-/*
-** T_REG -> 1
-** T_DIR -> 2
-** T_DIR ou T_REG -> 3
-** (NEVER APPEARED)T_IND -> 4
-** T_REG ou T_IND -> 5
-** T_DIR ou T_IND -> 6
-** T_DIR ou T_REG ou T_IND -> 7
-** ------------------------
-** if (g_op_tab[instruction->index].arg[0] == 1)
-**	 T_REG needed
-** else if (g_op_tab[instruction->index].arg[0] == 2)
-** 	 T_DIR needed
-** else if (g_op_tab[instruction->index].arg[0] == 3)
-** 	 T_DIR OU T_REG needed
-** else if (g_op_tab[instruction->index].arg[0] == 5)
-** 	 T_REG ou T_IND needed
-** else if (g_op_tab[instruction->index].arg[0] == 6)
-** 	 T_DIR ou T_IND needed
-** else if (g_op_tab[instruction->index].arg[0] == 7)
-**	 T_DIR OU T_REG OU T_IND needed
-** instruction->param[1] = 1;
-** instruction->param[2] = :live;
-** instruction->param[3] = 0;
-*/
 
 char	*move_to_param(char *str)
 {
