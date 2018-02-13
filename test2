@@ -1,0 +1,7 @@
+PREMIER PARAM : instruction->type[0] : 1
+PREMIER PARAM : instruction->param[0] : 1
+DEUXIEME PARAM : instruction->type[1] : 2
+DEUXIEME PARAM : instruction->param[1] : :live
+TROISIEME PARAM : instruction->type[2] : 2
+TROISIEME PARAM : instruction->param[2] : 1
+Writing output program to test.cor

@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 16:30:18 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/11 17:02:27 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/13 15:24:45 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,10 @@ void	assign_size_ins(t_instruction *ins)
 		offset += ins->size;
 		ins = ins->next;
 	}
+}
+
+int		get_byte_nb(t_instruction *ins, int i)
+{
+	return ((ins->type[i] == 2 && !g_op_tab[(int)(ins->index)].short_dir) ?\
+			4 : 2);
 }

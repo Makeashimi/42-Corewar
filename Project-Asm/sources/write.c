@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/12 22:58:14 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/13 15:28:54 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 
 void	wr_ocp(int fd, t_instruction *ins)
 {
-	char ocp;
-	int i;
+	char	ocp;
+	int		i;
 
 	ocp = 0;
 	i = 0;
@@ -105,12 +105,12 @@ void	wr_ocp(int fd, t_instruction *ins)
 
 void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 {
-	int i;
+	int	i;
 	int	wr;
 	int	l;
 
-	i = 0;
-	while (ins->param[i] && i < 3)
+	i = -1;
+	while (ins->param[++i] && i < 3)
 	{
 		if (ins->type[i] == 1)
 		{
@@ -120,24 +120,20 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 		else if (ins->param[i][0] == ':')
 		{
 			wr = get_label_addr(start, ins, &(ins->param[i][1]), i);
-			l = (ins->type[i] == 2 &&\
-					!g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2;
+			l = get_byte_nb(ins, i);
 		}
 		else
 		{
-			wr = rev_end(ft_atoi(ins->param[i]), (ins->type[i] == 2 &&\
-					 !g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2);
-			l = (ins->type[i] == 2 &&\
-					!g_op_tab[(int)(ins->index)].short_dir) ? 4 : 2;
+			wr = rev_end(ft_atoi(ins->param[i]), get_byte_nb(ins, i));
+			l = get_byte_nb(ins, i);
 		}
 		write(fd, &wr, l);
-		i++;
 	}
 }
 
 void	wr_header(int fd, t_asm *l_asm, t_instruction *start)
 {
-	t_header h;
+	t_header	h;
 
 	bzero(&h, sizeof(h));
 	h.magic = rev_end(COREWAR_EXEC_MAGIC, 4);
@@ -151,8 +147,9 @@ void	wr_header(int fd, t_asm *l_asm, t_instruction *start)
 
 void	wr_ins(int fd, t_instruction *ins)
 {
-	int	opcode;
-	t_instruction *start;
+	int				opcode;
+	t_instruction	*start;
+
 	start = ins;
 	while (ins)
 	{
@@ -164,4 +161,3 @@ void	wr_ins(int fd, t_instruction *ins)
 		ins = ins->next;
 	}
 }
-
