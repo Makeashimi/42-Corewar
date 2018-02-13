@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 15:35:47 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/13 14:32:16 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 ** une virgule entre chaque parametre
 ** une seule instruction par ligne
 ** commentaire autorise
+** pas 2x label
 */
 
 #include "asm.h"

@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/13 15:27:25 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/13 21:09:09 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,48 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 	return (l_asm);
 }
 
+int 	cmp_label(t_instruction *instruction, char *str)
+{
+	t_instruction	*cpy;
+
+	cpy = instruction;
+	//ft_printf("s ; %s\n", str);
+	while (str && cpy != NULL)
+	{
+		//ft_printf("cpy->label : %s\n", cpy->label);
+		if (ft_strcmp(str, cpy->label) == 0)
+			return (1);
+		cpy = cpy->next;
+	}
+	return (0);
+}
+
+void	check_label(t_instruction *instruction)
+{
+	t_instruction	*tmp;
+
+	tmp = instruction;
+	while (tmp != NULL)
+	{
+		if (tmp->param[0][0] == LABEL_CHAR)
+		{
+			if (cmp_label(instruction, tmp->param[0] + 1) == 0)
+				error("Wrong label name");
+		}
+		else if (tmp->param[1][0] == LABEL_CHAR)
+		{
+			if (cmp_label(instruction, tmp->param[1] + 1) == 0)
+				error("Wrong label name");
+		}
+		else if (tmp->param[2][0] == LABEL_CHAR)
+		{
+			if (cmp_label(instruction, tmp->param[2] + 1) == 0)
+				error("Wrong label name");
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 {
 	char	*cpy;
@@ -61,7 +103,7 @@ void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 
 	fd = open(cpy, O_RDWR | O_CREAT | O_TRUNC, 644); 
 	/* DEBUG */
-	ins = debug_ins();
+//	ins = debug_ins();
 	/* DEBUG */
 	assign_size_ins(ins);
 	wr_header(fd, l_asm, ins);
@@ -95,15 +137,22 @@ int		main(int argc, char **argv)
 		free(str);
 	}
 	tmp = begin_parse(l_asm);
-	//ft_printf("name : %s et comment : %s\n", l_asm->champname, l_asm->comment);
-	cpy = link_instruction(&instruction);
-	parse_instructions(cpy, tmp);
-	ft_printf("PREMIER PARAM : instruction->type[0] : %d\n", instruction->type[0]);
-	ft_printf("PREMIER PARAM : instruction->param[0] : %s\n", instruction->param[0]);
-	ft_printf("DEUXIEME PARAM : instruction->type[1] : %d\n", instruction->type[1]);
-	ft_printf("DEUXIEME PARAM : instruction->param[1] : %s\n", instruction->param[1]);
-	ft_printf("TROISIEME PARAM : instruction->type[2] : %d\n", instruction->type[2]);
-	ft_printf("TROISIEME PARAM : instruction->param[2] : %s\n", instruction->param[2]);
+	ft_printf("Nom du joueur : %s\nComment du joueur : %s\n", l_asm->champname, l_asm->comment);
+	while (tmp != NULL)
+	{
+		cpy = link_instruction(&instruction);
+		tmp = parse_instructions(cpy, tmp);
+		ft_printf("Instruction : %s et son label : %s\n", cpy->name, cpy->label);
+		//ft_printf("PREMIER PARAM : instruction->type[0] : %d\n", cpy->type[0]);
+		ft_printf("1er param : %s\n", cpy->param[0]);
+		//ft_printf("DEUXIEME PARAM : instruction->type[1] : %d\n", cpy->type[1]);
+		ft_printf("2eme param : %s\n", cpy->param[1]);
+		//ft_printf("TROISIEME PARAM : instruction->type[2] : %d\n", cpy->type[2]);
+		ft_printf("3eme param : %s\n", cpy->param[2]);
+		ft_printf("-----------------------------------\n");
+		tmp = tmp->next;
+	}
+	check_label(instruction);
 	write_output(argv[argc - 1], l_asm, instruction);
 	return (0);
 }

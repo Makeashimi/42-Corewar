@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/13 15:28:54 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/13 20:59:08 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 	addr = 0;
 	while (start)
 	{
-		if (start->label && ft_strcmp(start->label, label) == 0)
+		if (label && start->label && ft_strcmp(start->label, label) == 0)
 		{
 			if (start->address > ins->address)
 			{
