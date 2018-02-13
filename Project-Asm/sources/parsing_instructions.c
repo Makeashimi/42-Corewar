@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:29:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 17:46:59 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/13 18:28:11 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*move_to_instru(t_asm *tmp)
 	return (tmp->str + i);
 }
 
-void	parse_instructions(t_instruction *instruction, t_asm *tmp)
+t_asm	*parse_instructions(t_instruction *instruction, t_asm *tmp)
 {
 	int		ret;
 	int		i;
@@ -86,4 +86,5 @@ void	parse_instructions(t_instruction *instruction, t_asm *tmp)
 	tmp->str = move_to_param(tmp->str + i);
 	if (check_param(instruction, tmp->str) == 0)
 		error("Syntax error with the params of the instruction");
+	return (tmp);
 }

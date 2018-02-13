@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 18:48:14 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/09 22:28:05 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/13 18:50:19 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static t_instruction	*create_instruction(void)
 	if (!(instruction = (t_instruction*)malloc(sizeof(t_instruction))))
 		error("Malloc error");
 	ft_memset(instruction, 0, sizeof(instruction));
-	instruction->index = -1;
 	return (instruction);
 }
 

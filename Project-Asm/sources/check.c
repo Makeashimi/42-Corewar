@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/11 20:26:26 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/13 19:26:17 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,46 @@
 ** instruction->param[1] = 1;
 ** instruction->param[2] = 0 ou :live;
 ** instruction->param[3] = 0 ou :live;
+** Enregistrer et comparer tous les parametres, les registres, les directs, les indirects, got them
+** Verifier la virgule !
+** 
 */
 
-char		*move_str(char *str, int virgule)
+char		*move_str(t_instruction *instruction, char *str, int i)
 {
-	int		i;
+	int		j;
 
-	i = 0;
-	while (str[i] != '\0' && str[i] != SEPARATOR_CHAR)
-		i++;
-	if (str[i] == '\0' && virgule > 3)
-		error("Syntax error with the parameters");
-	i++;
-	return (str + i);
+	j = 0;
+	if ((i + 1) == g_op_tab[(int)instruction->index].nb_param)
+	{
+		//ft_printf("str %s\n", str);
+		while (str[j] != '\0' && ft_space(str[j]) == 0)
+		{
+			if (str[j] == SEPARATOR_CHAR)
+				error("Characters after parameters");
+			j++;
+		}
+		//ft_printf("str apres : %s\n", str + j);
+		while (str[j] != '\0')
+		{
+			if (str[j] == COMMENT_CHAR)
+				return (NULL);
+			if (ft_space(str[j]) == 0)
+				error("Characters after parameters");
+			j++;
+		}
+	}
+	while (str[j] != '\0' && str[j] != SEPARATOR_CHAR)
+		j++;
+	j++;
+	return (str + j);
 }
 
 int			check_param(t_instruction *instruction, char *str)
 {
-	// ft_printf("l'instruction : %s\nsur son lit de label : %s\n%d\n%d\n%d\n",
-	// instruction->name, instruction->label,
-	// g_op_tab[(int)instruction->index].arg[0],
-	// g_op_tab[(int)instruction->index].arg[1],
-	// g_op_tab[(int)instruction->index].arg[2]);
 	int		i;
-	//int		virgule;
 
 	i = 0;
-	//virgule = 0;
 	while (i < g_op_tab[(int)instruction->index].nb_param)
 	{
 		if (g_op_tab[(int)instruction->index].arg[i] == T_REG)
@@ -128,16 +141,10 @@ int			check_param(t_instruction *instruction, char *str)
 				error("");
 			}
 		}
-		str = move_str(str, 0);//mettre str au bon endroit
-		//PARSING DE LA VIRGULE ICI
+		str = move_str(instruction, str, i);
+		//ft_printf("STR APRES : %s\n", str);
 		i++;
 	}
-	//ft_printf("virgule : %d et i : %d\n", virgule, i);
-	// if (virgule > i)
-	// {
-	// 	ft_printf("Too much %c", SEPARATOR_CHAR);
-	// 	error("");
-	// }
 	return (1);
 }
 
@@ -157,7 +164,7 @@ static int	is_confurm_label(char c)
 
 int			is_label(t_instruction *instruction, char *str)
 {
-	int				i;
+	int			i;
 
 	i = 0;
 	while (str[i] != '\0' && str[i] != LABEL_CHAR)
@@ -177,8 +184,8 @@ int			is_label(t_instruction *instruction, char *str)
 
 int			is_name_instru(t_instruction *instruction, char *str)
 {
-	int				len;
-	int				i;
+	int			len;
+	int			i;
 
 	len = 0;
 	i = 0;
