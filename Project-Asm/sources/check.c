@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/13 19:26:17 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:13:41 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@
 ** instruction->param[1] = 1;
 ** instruction->param[2] = 0 ou :live;
 ** instruction->param[3] = 0 ou :live;
-** Enregistrer et comparer tous les parametres, les registres, les directs, les indirects, got them
+** Enregistrer et comparer tous les parametres, les registres
+** les directs, les indirects
 ** Verifier la virgule !
-** 
 */
 
 char		*move_str(t_instruction *instruction, char *str, int i)
@@ -48,14 +48,12 @@ char		*move_str(t_instruction *instruction, char *str, int i)
 	j = 0;
 	if ((i + 1) == g_op_tab[(int)instruction->index].nb_param)
 	{
-		//ft_printf("str %s\n", str);
 		while (str[j] != '\0' && ft_space(str[j]) == 0)
 		{
 			if (str[j] == SEPARATOR_CHAR)
 				error("Characters after parameters");
 			j++;
 		}
-		//ft_printf("str apres : %s\n", str + j);
 		while (str[j] != '\0')
 		{
 			if (str[j] == COMMENT_CHAR)
@@ -68,7 +66,79 @@ char		*move_str(t_instruction *instruction, char *str, int i)
 	while (str[j] != '\0' && str[j] != SEPARATOR_CHAR)
 		j++;
 	j++;
+	while (ft_space(str[j]) == 1)
+		j++;
 	return (str + j);
+}
+
+void		check_param2(t_instruction *ins, char *str, int i)
+{
+	if (g_op_tab[(int)ins->index].arg[i] == T_IND)
+	{
+		if (check_ind(ins, str, i) == 0)
+		{
+			ft_printf("Invalid parameter for %s instruction", ins->name);
+			error("");
+		}
+	}
+	else if (g_op_tab[(int)ins->index].arg[i] == (T_REG + T_DIR))
+	{
+		if (check_dir(ins, str, i) == 0 && check_reg(ins, str, i) == 0)
+		{
+			ft_printf("Invalid parameter for %s instruction", ins->name);
+			error("");
+		}
+	}
+	else if (g_op_tab[(int)ins->index].arg[i] == (T_REG + T_IND))
+	{
+		if (check_reg(ins, str, i) == 0 && check_ind(ins, str, i) == 0)
+		{
+			ft_printf("Invalid parameter for %s instruction", ins->name);
+			error("");
+		}
+	}
+}
+
+void		check_param3(t_instruction *ins, char *str, int i)
+{
+	if (g_op_tab[(int)ins->index].arg[i] == (T_DIR + T_IND))
+	{
+		if (check_dir(ins, str, i) == 0 &&
+											check_ind(ins, str, i) == 0)
+		{
+			ft_printf("Invalid parameter for %s instruction", ins->name);
+			error("");
+		}
+	}
+	else if (g_op_tab[(int)ins->index].arg[i] == (T_REG + T_DIR + T_IND))
+	{
+		if (check_reg(ins, str, i) == 0 && check_dir(ins, str, i) == 0
+										&& check_ind(ins, str, i) == 0)
+		{
+			ft_printf("Invalid parameter for %s instruction", ins->name);
+			error("");
+		}
+	}
+}
+
+void		check_param1(t_instruction *ins, char *str, int i)
+{
+	if (g_op_tab[(int)ins->index].arg[i] == T_REG)
+	{
+		if (check_reg(ins, str, i) == 0)
+		{
+			ft_printf("Invalid parameter for %s instruction", ins->name);
+			error("");
+		}
+	}
+	else if (g_op_tab[(int)ins->index].arg[i] == T_DIR)
+	{
+		if (check_dir(ins, str, i) == 0)
+		{
+			ft_printf("Invalid parameter for %s instruction", ins->name);
+			error("");
+		}
+	}
 }
 
 int			check_param(t_instruction *instruction, char *str)
@@ -78,71 +148,10 @@ int			check_param(t_instruction *instruction, char *str)
 	i = 0;
 	while (i < g_op_tab[(int)instruction->index].nb_param)
 	{
-		if (g_op_tab[(int)instruction->index].arg[i] == T_REG)
-		{
-
-			if (check_reg(instruction, str, i) == 0)
-			{
-				ft_printf("Invalid parameter for %s instruction", instruction->name);
-				error("");
-			}
-		}
-		else if (g_op_tab[(int)instruction->index].arg[i] == T_DIR)
-		{
-			
-			if (check_dir(instruction, str, i) == 0)
-			{
-				ft_printf("Invalid parameter for %s instruction", instruction->name);
-				error("");
-			}
-		}
-		else if (g_op_tab[(int)instruction->index].arg[i] == T_IND)
-		{
-			
-			if (check_ind(instruction, str, i) == 0)
-			{
-				ft_printf("Invalid parameter for %s instruction", instruction->name);
-				error("");
-			}
-		}
-		else if (g_op_tab[(int)instruction->index].arg[i] == (T_REG + T_DIR))
-		{
-			//T_DIR ou T_REG needed
-			if (check_dir(instruction, str, i) == 0 && check_reg(instruction, str, i) == 0)
-			{
-				ft_printf("Invalid parameter for %s instruction", instruction->name);
-				error("");
-			}
-		}
-		else if (g_op_tab[(int)instruction->index].arg[i] == (T_REG + T_IND))
-		{
-			//T_REG ou T_IND needed
-			if (check_reg(instruction, str, i) == 0 && check_ind(instruction, str, i) == 0)
-			{
-				ft_printf("Invalid parameter for %s instruction", instruction->name);
-				error("");
-			}
-		}
-		else if (g_op_tab[(int)instruction->index].arg[i] == (T_DIR + T_IND))
-		{
-			//T_DIR ou T_IND needed
-			if (check_dir(instruction, str, i) == 0 && check_ind(instruction, str, i) == 0)
-			{
-				ft_printf("Invalid parameter for %s instruction", instruction->name);
-				error("");
-			}
-		}
-		else if (g_op_tab[(int)instruction->index].arg[i] == (T_REG + T_DIR + T_IND))
-		{
-			//T_DIR OU T_REG OU T_IND needed
-			if (check_reg(instruction, str, i) == 0 && check_dir(instruction, str, i) == 0 && check_ind(instruction, str, i) == 0)
-			{
-				ft_printf("Invalid parameter for %s instruction", instruction->name);
-				error("");
-			}
-		}
+		check_param1(instruction, str, i);
+		check_param2(instruction, str, i);
+		check_param3(instruction, str, i);
 		str = move_str(instruction, str, i);
-		//ft_printf("STR APRES : %s\n", str);
 		i++;
 	}
 	return (1);
