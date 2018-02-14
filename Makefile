@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/02/12 18:35:34 by varichar         ###   ########.fr        #
+#    Updated: 2018/02/13 21:28:58 by varichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ ASM_SRC_NAME =	check.c\
 				main.c\
 				param.c\
 				parsing_instructions.c\
-				parsing_name_comment.c\
+				parsing_comment.c\
+				parsing_name.c\
 				tools.c\
 				write.c\
 				size.c
