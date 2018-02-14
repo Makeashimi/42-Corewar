@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/13 21:09:09 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:05:09 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ int 	cmp_label(t_instruction *instruction, char *str)
 	t_instruction	*cpy;
 
 	cpy = instruction;
-	//ft_printf("s ; %s\n", str);
-	while (str && cpy != NULL)
+	while (cpy != NULL)
 	{
-		//ft_printf("cpy->label : %s\n", cpy->label);
+		while (cpy->label == NULL)
+			cpy = cpy->next;
+		//ft_printf("l'instruction : %s\n", cpy->label);
 		if (ft_strcmp(str, cpy->label) == 0)
 			return (1);
 		cpy = cpy->next;
@@ -70,18 +71,21 @@ void	check_label(t_instruction *instruction)
 	tmp = instruction;
 	while (tmp != NULL)
 	{
-		if (tmp->param[0][0] == LABEL_CHAR)
+		if (tmp->param[0] != NULL && tmp->param[0][0] == LABEL_CHAR)
 		{
+			//ft_printf("le label a comparer : %s\n", tmp->param[0]);
 			if (cmp_label(instruction, tmp->param[0] + 1) == 0)
 				error("Wrong label name");
 		}
-		else if (tmp->param[1][0] == LABEL_CHAR)
+		else if (tmp->param[1] != NULL && tmp->param[1][0] == LABEL_CHAR)
 		{
+			//ft_printf("le label a comparer : %s\n", tmp->param[1]);
 			if (cmp_label(instruction, tmp->param[1] + 1) == 0)
 				error("Wrong label name");
 		}
-		else if (tmp->param[2][0] == LABEL_CHAR)
+		else if (tmp->param[2] != NULL && tmp->param[2][0] == LABEL_CHAR)
 		{
+			//ft_printf("le label a comparer : %s\n", tmp->param[2]);
 			if (cmp_label(instruction, tmp->param[2] + 1) == 0)
 				error("Wrong label name");
 		}
@@ -109,6 +113,15 @@ void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	wr_header(fd, l_asm, ins);
 	wr_ins(fd, ins);
 	ft_printf("Writing output program to %s\n", cpy);
+}
+
+int 	check_next_tmp(t_asm *tmp)
+{
+	while (tmp != NULL && is_all_space(tmp->str) == 1)
+		tmp = tmp->next;
+	if (tmp == NULL)
+		return (0);
+	return (1);
 }
 
 int		main(int argc, char **argv)
@@ -151,6 +164,8 @@ int		main(int argc, char **argv)
 		ft_printf("3eme param : %s\n", cpy->param[2]);
 		ft_printf("-----------------------------------\n");
 		tmp = tmp->next;
+		if (check_next_tmp(tmp) == 0)
+			break ;
 	}
 	check_label(instruction);
 	write_output(argv[argc - 1], l_asm, instruction);
