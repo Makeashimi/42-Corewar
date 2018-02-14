@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 15:05:09 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:16:24 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int 	cmp_label(t_instruction *instruction, char *str)
 	{
 		while (cpy->label == NULL)
 			cpy = cpy->next;
-		//ft_printf("l'instruction : %s\n", cpy->label);
 		if (ft_strcmp(str, cpy->label) == 0)
 			return (1);
 		cpy = cpy->next;
@@ -73,19 +72,16 @@ void	check_label(t_instruction *instruction)
 	{
 		if (tmp->param[0] != NULL && tmp->param[0][0] == LABEL_CHAR)
 		{
-			//ft_printf("le label a comparer : %s\n", tmp->param[0]);
 			if (cmp_label(instruction, tmp->param[0] + 1) == 0)
 				error("Wrong label name");
 		}
 		else if (tmp->param[1] != NULL && tmp->param[1][0] == LABEL_CHAR)
 		{
-			//ft_printf("le label a comparer : %s\n", tmp->param[1]);
 			if (cmp_label(instruction, tmp->param[1] + 1) == 0)
 				error("Wrong label name");
 		}
 		else if (tmp->param[2] != NULL && tmp->param[2][0] == LABEL_CHAR)
 		{
-			//ft_printf("le label a comparer : %s\n", tmp->param[2]);
 			if (cmp_label(instruction, tmp->param[2] + 1) == 0)
 				error("Wrong label name");
 		}
