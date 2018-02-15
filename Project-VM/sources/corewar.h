@@ -6,7 +6,7 @@
 /*   By: thedupuy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 17:45:56 by thedupuy          #+#    #+#             */
-/*   Updated: 2018/01/18 17:45:58 by thedupuy         ###   ########.fr       */
+/*   Updated: 2018/02/15 12:44:47 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,32 +51,32 @@ typedef struct		s_champ
 
 typedef struct		s_cor
 {
-	int				player;
-	int				inst;
-	int				pc;
-	int				reg[16];
-	int				param[5];
-	int				carry;
-	int				live;
-	int				ptr;
-	int				count_t;
-	struct s_cor	*next;
+	int				player; // Identifiant du player
+	int				inst; //l'opcode
+	int				pc; //Process Counter
+	int				reg[16]; //les 16 registres
+	int				param[5]; //l'ocp, les 3 parametres et le short_dir 
+	int				carry; //le carry
+	int				live; //nb de fois que le process a renvoyé live
+	int				ptr; // Le vrai process counter
+	int				count_t; //nombre de Cycle avant execution de l'instruction
+	struct s_cor	*next; // maillion suivant
 }					t_cor;
 
 typedef struct		s_data
 {
-	void			(*f[16])(struct s_data *, t_cor *);
-	unsigned char	*arene;
-	t_champ			*champ;
-	t_cor			*proc;
-	int				dump;
-	int				verb;
-	int				n;
-	int				c_n[4];
+	void			(*f[16])(struct s_data *, t_cor *); //les fonctions des op
+	unsigned char	*arene; //l'arene en char*
+	t_champ			*champ; // liste de tous les champions
+	t_cor			*proc; // liste de tous les processus vivants
+	int				dump; //option pour afficher sur stdout au bout de dump tours
+	int				verb; //option verbose
+	int				n; //plus tard TG
+	int				c_n[4]; //Attribuer les bonnes valeurs aux champions
 	int				nb_champ;
-	int				ctd;
-	int				nbr_c;
-	int				last_l;
+	int				ctd; // CycleToDie
+	int				nbr_c;// Nb check
+	int				last_l; //Le dernier live reçu
 }					t_data;
 
 
