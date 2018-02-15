@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/15 20:43:08 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/15 21:04:00 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,5 @@ void						wr_header(int fd, t_asm *l_asm, t_instruction *ins);
 void						wr_ins(int fd, t_instruction *ins);
 void						assign_size_ins(t_instruction *ins);
 int							get_byte_nb(t_instruction *ins, int i);
-
-
-/* DEBUG */
-t_instruction				*debug_ins(void);
 
 #endif

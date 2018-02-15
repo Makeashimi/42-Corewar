@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 16:30:18 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/15 19:22:09 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/15 21:08:07 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	assign_size_ins(t_instruction *ins)
 
 int		get_byte_nb(t_instruction *ins, int i)
 {
-	return ((ins->type[i] == 2 && !g_op_tab[(int)(ins->index)].short_dir) ?\
+	if (ins->type[i] == 1)
+		return (1);
+	else
+		return ((ins->type[i] == 2 && !g_op_tab[(int)(ins->index)].short_dir) ?\
 			4 : 2);
 }

@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 19:34:02 by varichar          #+#    #+#             */
-/*   Updated: 2018/01/25 19:42:49 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/15 21:10:07 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int		rev_end(int val, char size)
 	else if (size == 2)
 		return (val >> 8 | val << 8);
 	else if (size == 4)
-		return (((val >> 24) & 0xff) |
-				((val << 8) & 0xff0000) |
-				((val >> 8) & 0xff00) |
+	{
+		return (((val >> 24) & 0xff) |\
+				((val << 8) & 0xff0000) |\
+				((val >> 8) & 0xff00) |\
 				((val << 24) & 0xff000000));
+	}
 	return (0);
 }
