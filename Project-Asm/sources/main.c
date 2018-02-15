@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 14:48:24 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/14 18:45:36 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int		main(int argc, char **argv)
 		ft_printf("3eme param : %s\n", cpy->param[2]);
 		ft_printf("-----------------------------------\n");
 		tmp = tmp->next;
+		//ft_printf("tmp->str : %s\n", tmp->str);
 		if (check_next_tmp(tmp) == 0)
 			break ;
 	}
