@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/13 14:32:16 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:17:36 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,13 @@ t_asm			*begin_parse(t_asm *l_asm)
 	tmp = l_asm;
 	while (tmp != NULL && is_all_space(tmp->str) == 1)
 		tmp = tmp->next;
+	if (tmp == NULL)
+		error("Nothing found");
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
 	tmp = is_name_or_comment(l_asm, tmp, i);
 	tmp = tmp->next;
+	if (tmp == NULL)
+		error("Nothing found after .name/.comment");
 	return (tmp);
 }

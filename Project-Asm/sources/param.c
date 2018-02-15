@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 22:15:02 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 14:49:42 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/15 20:44:15 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		check_dir_ind(char *str)
 		i++;
 		count++;
 	}
+	
 	return (count);
 }
 

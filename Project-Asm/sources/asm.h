@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 14:54:12 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/15 16:12:28 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int							is_all_space(char *str);
 t_asm						*begin_parse(t_asm *l_asm);
 void						check_next_content(t_asm *l_asm, char *str,
 														char *message, char c);
-t_asm						*parse_instructions(t_instruction
-												*instruction, t_asm *tmp);
+t_asm						*parse_instructions(t_instruction *instruction,
+													t_asm *tmp, int i, int ret);
 int							is_label(t_instruction *instruction, char *str);
 int							is_name_instru(t_instruction *instruction,
 																	char *str);
