@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 15:16:18 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/14 15:16:53 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct				s_instruction
 	char					*name;
 	char					index;
 	int						size;
-	int						adress;
+	int						address;
 	char					*param[3];
 	char					type[3];
 	struct s_instruction	*next;
