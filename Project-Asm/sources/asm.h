@@ -6,11 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/02/14 15:16:53 by varichar         ###   ########.fr       */
-=======
-/*   Updated: 2018/01/23 11:49:39 by jcharloi         ###   ########.fr       */
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
+/*   Updated: 2018/02/15 11:22:31 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +33,6 @@ typedef struct				s_instruction
 	struct s_instruction	*next;
 }							t_instruction;
 
-<<<<<<< HEAD
 typedef struct				s_asm
 {
 	char					*str;
@@ -76,9 +71,5 @@ int							get_byte_nb(t_instruction *ins, int i);
 
 /* DEBUG */
 t_instruction				*debug_ins(void);
-=======
-void				parse_name(t_asm *l_asm);
-void				error(char *str);
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
 
 #endif

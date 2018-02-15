@@ -6,11 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2018/02/15 10:37:18 by varichar         ###   ########.fr        #
-=======
-#    Updated: 2018/01/18 19:55:47 by jcharloi         ###   ########.fr        #
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
+#    Updated: 2018/02/15 11:21:22 by varichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +31,6 @@ ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 
 VM_SRC_PATH = ./Project-VM/sources/
-<<<<<<< HEAD
 VM_SRC_NAME = 	main.c \
 				calc_ocp.c \
 				parse_champ.c \
@@ -60,9 +55,6 @@ VM_SRC_NAME = 	main.c \
 				ft_sub.c \
 				ft_xor.c \
 				ft_ldi.c
-=======
-VM_SRC_NAME = main.c parse_champ.c init_data.c check.c list_proc.c
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
 VM_OBJ_PATH = ./Project-VM/objects/
 VM_OBJ_NAME = $(VM_SRC_NAME:.c=.o)
 
@@ -94,13 +86,8 @@ $(ASM_OBJ_PATH)%.o: $(ASM_SRC_PATH)%.c
 	@$(CC) -o $@ -c $< $(CFLAGS)
 	@echo $(BLUE)"Your $@ is compiled !"$(EOC)
 
-<<<<<<< HEAD
 $(NAME2): $(VM_OBJ) op.o
 	@$(CC) -o $(NAME2) $(VM_OBJ) op.o $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
-=======
-$(NAME2): $(VM_OBJ)
-	@$(CC) -o $(NAME2) $(VM_OBJ) $(LIB_NAME) $(PRINT_NAME) $(CFLAGS)
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
 	@echo $(GREEN)"Your ./$(NAME2) is ready to work ! ✅"$(EOC)
 
 $(VM_OBJ_PATH)%.o: $(VM_SRC_PATH)%.c
@@ -121,10 +108,7 @@ creation:
 
 -include $(ASM_OBJ:.o=.d)
 -include $(VM_OBJ:.o=.d)
-<<<<<<< HEAD
 	-include op.o=.d
-=======
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
 
 clean:
 	@make clean -C $(LIB_PATH)

@@ -6,11 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2018/02/14 15:16:24 by varichar         ###   ########.fr       */
-=======
-/*   Updated: 2018/01/23 16:48:47 by jcharloi         ###   ########.fr       */
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
+/*   Updated: 2018/02/15 11:25:10 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +47,6 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 	return (l_asm);
 }
 
-<<<<<<< HEAD
 int 	cmp_label(t_instruction *instruction, char *str)
 {
 	t_instruction	*cpy;
@@ -137,40 +132,22 @@ int		main(int argc, char **argv)
 
 	l_asm = NULL;
 	instruction = NULL;
-=======
-int		main(int argc, char **argv)
-{
-	t_asm	*l_asm;
-	char	*str;
-	int		fd;
-
-	l_asm = NULL;
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
 	if (argc < 2)
 		error("Usage : ./asm <filename.s>");
 	fd = open(argv[argc - 1], O_RDONLY);
 	if (fd == -1)
-<<<<<<< HEAD
 	{
 		ft_printf("Open error, can't read source file %s", argv[argc - 1]);
 		error("");
 	}
-=======
-		error("Open error");
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
 	while (get_next_line(fd, &str) == 1)
 	{
 		l_asm = link_str(l_asm, str);
 		free(str);
 	}
-<<<<<<< HEAD
 	tmp = begin_parse(l_asm);
 	ft_printf("Nom du joueur : %s\nComment du joueur : %s\n", l_asm->champname, l_asm->comment);
 	while (tmp != NULL)
-=======
-	parse_name(l_asm);
-	/*while (l_asm != NULL)
->>>>>>> 27d211396ddca237701973d9ebfdb5907ab1f87c
 	{
 		cpy = link_instruction(&instruction);
 		tmp = parse_instructions(cpy, tmp);
