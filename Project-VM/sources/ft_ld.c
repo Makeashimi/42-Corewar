@@ -6,12 +6,11 @@
 /*   By: thedupuy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 13:29:11 by thedupuy          #+#    #+#             */
-/*   Updated: 2018/02/13 13:29:13 by thedupuy         ###   ########.fr       */
+/*   Updated: 2018/02/15 14:18:01 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
 
 static void		my_second_ld(t_data *data, t_cor *proc)
 {
