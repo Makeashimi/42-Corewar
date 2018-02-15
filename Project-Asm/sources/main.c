@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 15:16:24 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/15 20:43:15 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,10 @@ void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	(void)l_asm;
 	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 5))))
 		error("Malloc error");
-	cpy = strcpy_until(cpy, str, '.');
+	cpy = strcpy_untilstr(cpy, str, ".s\0");
 	cpy = ft_strcat(cpy, ".cor");
 
-	fd = open(cpy, O_RDWR | O_CREAT | O_TRUNC, 644); 
-	/* DEBUG */
-//	ins = debug_ins();
-	/* DEBUG */
+	fd = open(cpy, O_RDWR | O_CREAT | O_TRUNC, FILE_RIGHTS); 
 	assign_size_ins(ins);
 	wr_header(fd, l_asm, ins);
 	wr_ins(fd, ins);
@@ -124,7 +121,6 @@ int		main(int argc, char **argv)
 {
 	t_instruction	*cpy;
 	t_instruction	*instruction;
-//	t_header		*head;
 	t_asm			*l_asm;
 	t_asm			*tmp;
 	char			*str;
@@ -160,6 +156,7 @@ int		main(int argc, char **argv)
 		ft_printf("3eme param : %s\n", cpy->param[2]);
 		ft_printf("-----------------------------------\n");
 		tmp = tmp->next;
+		//ft_printf("tmp->str : %s\n", tmp->str);
 		if (check_next_tmp(tmp) == 0)
 			break ;
 	}

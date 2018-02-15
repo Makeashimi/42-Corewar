@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 17:09:11 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/09 19:40:59 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/15 20:31:47 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,11 @@ char				*strcpy_until(char *dst, const char *src, char c);
 int					str_nbr_i(char *str, char c);
 int					str_digit_until(char *str, char c);
 void				cpy_tab(int *tab1, int *tab2, int len);
+
+/*
+** Library used for corewar
+*/
+
+char				*strcpy_untilstr(char *dst, const char *src, char *needle);
 
 #endif

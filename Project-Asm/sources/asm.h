@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 15:16:53 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/15 20:43:08 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <fcntl.h>
 # include "../../op.h"
 # include "../../libft/libft.h"
+
+# define FILE_RIGHTS 0600
 
 typedef struct				s_instruction
 {

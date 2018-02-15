@@ -6,60 +6,11 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/13 20:59:08 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/15 20:17:49 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-/* DEBUG */
-t_instruction *debug_ins(void)
-{
-	t_instruction *ret;
-	t_instruction *buf;
-
-	ret = (t_instruction*)malloc(sizeof(t_instruction));
-	buf = ret;
-	ft_bzero(buf, sizeof(t_instruction));
-	buf->label = ft_strdup("l2");
-	buf->name = ft_strdup("sti");
-	buf->index = 10;
-	buf->param[0] = "1";
-	buf->param[1] = ":live";
-	buf->param[2] = "1";
-	buf->type[0] = 1;
-	buf->type[1] = 2;
-	buf->type[2] = 2;
-	buf->next = (t_instruction*)malloc(sizeof(t_instruction));
-	buf = buf->next;
-	ft_bzero(buf, sizeof(t_instruction));
-	buf->name = ft_strdup("and");
-	buf->index = 5;
-	buf->param[0] = "1";
-	buf->param[1] = ":live";
-	buf->param[2] = "1";
-	buf->type[0] = 1;
-	buf->type[1] = 2;
-	buf->type[2] = 1;
-	buf->next = (t_instruction*)malloc(sizeof(t_instruction));
-	buf = buf->next;
-	ft_bzero(buf, sizeof(t_instruction));
-	buf->label = ft_strdup("live");
-	buf->name = ft_strdup("live");
-	buf->index = 0;
-	buf->param[0] = "1";
-	buf->type[0] = 2;
-	buf->next = (t_instruction*)malloc(sizeof(t_instruction));
-	buf = buf->next;
-	ft_bzero(buf, sizeof(t_instruction));
-	buf->name = ft_strdup("zjmp");
-	buf->index = 8;
-	buf->param[0] = ":live";
-	buf->type[0] = 2;
-
-	return (ret);
-}
-/* DEBUG */
 
 int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 		int i)
@@ -124,7 +75,8 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 		}
 		else
 		{
-			wr = rev_end(ft_atoi(ins->param[i]), get_byte_nb(ins, i));
+			wr = ft_atoi(ins->param[i]);
+			wr = rev_end(wr, (wr < 0) ? 4 : get_byte_nb(ins, i)) >> (wr < 0 && (ins->type[i] != 2 || g_op_tab[(int)ins->index].short_dir) ? 16 : 0);
 			l = get_byte_nb(ins, i);
 		}
 		write(fd, &wr, l);

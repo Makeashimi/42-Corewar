@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/02/14 15:06:13 by varichar         ###   ########.fr        #
+#    Updated: 2018/02/15 18:16:55 by varichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,11 @@ NAME1 = asm
 NAME2 = corewar
 
 ASM_SRC_PATH = ./Project-Asm/sources/
-ASM_SRC_NAME =	check.c\
-				endian.c\
+ASM_SRC_NAME =	endian.c\
+				instructions.c\
 				main.c\
 				param.c\
+				parsing_parameters.c\
 				parsing_instructions.c\
 				parsing_comment.c\
 				parsing_name.c\
