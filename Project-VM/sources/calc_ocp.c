@@ -6,7 +6,7 @@
 /*   By: thbricqu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 15:03:38 by thbricqu          #+#    #+#             */
-/*   Updated: 2018/02/16 17:06:10 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/16 17:49:40 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ static int	check_ocp(t_cor *p, t_data *d)
 	{
 		if ((p->param[i] != (p->param[i] & g_op_tab[(d->arene[p->ptr]) -\
 					1].arg[i])))
+			return (nb_octet(p, d, i));
+		if ((p->param[i] == T_REG && (d->arene[p->ptr + nb_octet(p, d, i)] > 16\
+						|| d->arene[p->ptr + nb_octet(p, d, i)] < 1)))
 			return (nb_octet(p, d, i));
 	}
 	return (0);
@@ -84,7 +87,7 @@ int		calc_ocp(t_cor *proc, t_data *data)
 	tab[1] = (proc->param[0] & 48) >> 4;
 	tab[2] = (proc->param[0] & 12) >> 2;
 	type_param(tab, proc, data);
-	return (ret);
+	return (check_ocp(proc, data));
 }
 
 int		rev_end(int val, char size)
