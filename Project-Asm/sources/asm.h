@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/15 16:12:28 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/19 19:28:58 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ typedef struct				s_instruction
 typedef struct				s_asm
 {
 	char					*str;
-	char					*champname;
-	char					*comment;
+	char					**champname;
+	char					**comment;
+	int						len;
 	struct s_asm			*next;
 }							t_asm;
 
@@ -60,5 +61,8 @@ int							check_dir(t_instruction *instruction, char *str,
 int							check_ind(t_instruction *instruction, char *str,
 																		int i);
 void						error(char *str);
+
+
+void	check_len(t_asm *l_asm, char c);
 
 #endif

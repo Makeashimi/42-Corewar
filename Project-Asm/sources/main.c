@@ -6,25 +6,16 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/15 21:15:00 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/19 19:33:39 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
 /*
-** 2 LABELS
 ** Name/Comment sur plusieurs lignes
-** Commentaire commencant par ;
 ** Label à la fin
-** Instruction collé au param
-** Segfault invalid16 -> Rien apres "%:"
-** r0 -> invalid52
-** invalid83
 ** Ajouter une derniere ligne obligatoirement ?
-** Je sais pas à ld.s
-** st.s
-** triple label ultimate-surrender
 */
 
 void	error(char *str)
@@ -72,7 +63,7 @@ int		cmp_label(t_instruction *instruction, char *str)
 		while (cpy != NULL && cpy->label == NULL)
 			cpy = cpy->next;
 		if (cpy == NULL)
-			error("No label found");
+			return (0);
 		if (ft_strcmp(str, cpy->label) == 0)
 			return (1);
 		cpy = cpy->next;
@@ -157,18 +148,12 @@ int		main(int argc, char **argv)
 	tmp = begin_parse(l_asm);
 	while (tmp != NULL)
 	{
-		//ft_printf("hhge\n");
 		cpy = link_instruction(&instruction);
-		//ft_printf("hhge\n");
 		tmp = parse_instructions(cpy, tmp, 0, 0);
-		//ft_printf("tmp->str : %p\n", tmp);
 		tmp = tmp->next;
-		//ft_printf("2\n");
 		if (check_next_tmp(tmp) == 0)
 			break ;
-		//ft_printf("hhge\n");
 	}
-
 	check_label(instruction);
 	write_output(argv[argc - 1], l_asm, instruction);
 	return (0);
