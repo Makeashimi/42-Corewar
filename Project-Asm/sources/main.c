@@ -6,11 +6,17 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/15 20:43:15 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:58:15 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+/*
+** Name/Comment sur plusieurs lignes
+** Label à la fin
+** Ajouter une derniere ligne obligatoirement ?
+*/
 
 void	error(char *str)
 {
@@ -47,15 +53,17 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 	return (l_asm);
 }
 
-int 	cmp_label(t_instruction *instruction, char *str)
+int		cmp_label(t_instruction *instruction, char *str)
 {
 	t_instruction	*cpy;
 
 	cpy = instruction;
 	while (cpy != NULL)
 	{
-		while (cpy->label == NULL)
+		while (cpy != NULL && cpy->label == NULL)
 			cpy = cpy->next;
+		if (cpy == NULL)
+			return (0);
 		if (ft_strcmp(str, cpy->label) == 0)
 			return (1);
 		cpy = cpy->next;
@@ -108,7 +116,7 @@ void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	ft_printf("Writing output program to %s\n", cpy);
 }
 
-int 	check_next_tmp(t_asm *tmp)
+int		check_next_tmp(t_asm *tmp)
 {
 	while (tmp != NULL && is_all_space(tmp->str) == 1)
 		tmp = tmp->next;
@@ -142,21 +150,11 @@ int		main(int argc, char **argv)
 		free(str);
 	}
 	tmp = begin_parse(l_asm);
-	ft_printf("Nom du joueur : %s\nComment du joueur : %s\n", l_asm->champname, l_asm->comment);
 	while (tmp != NULL)
 	{
 		cpy = link_instruction(&instruction);
-		tmp = parse_instructions(cpy, tmp);
-		ft_printf("Instruction : %s et son label : %s\n", cpy->name, cpy->label);
-		//ft_printf("PREMIER PARAM : instruction->type[0] : %d\n", cpy->type[0]);
-		ft_printf("1er param : %s\n", cpy->param[0]);
-		//ft_printf("DEUXIEME PARAM : instruction->type[1] : %d\n", cpy->type[1]);
-		ft_printf("2eme param : %s\n", cpy->param[1]);
-		//ft_printf("TROISIEME PARAM : instruction->type[2] : %d\n", cpy->type[2]);
-		ft_printf("3eme param : %s\n", cpy->param[2]);
-		ft_printf("-----------------------------------\n");
+		tmp = parse_instructions(cpy, tmp, 0, 0);
 		tmp = tmp->next;
-		//ft_printf("tmp->str : %s\n", tmp->str);
 		if (check_next_tmp(tmp) == 0)
 			break ;
 	}

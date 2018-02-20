@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/15 21:04:00 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:58:27 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ typedef struct				s_instruction
 typedef struct				s_asm
 {
 	char					*str;
-	char					*champname;
-	char					*comment;
+	char					**champname;
+	char					**comment;
+	int						len;
 	struct s_asm			*next;
 }							t_asm;
 
@@ -47,8 +48,8 @@ int							is_all_space(char *str);
 t_asm						*begin_parse(t_asm *l_asm);
 void						check_next_content(t_asm *l_asm, char *str,
 														char *message, char c);
-t_asm						*parse_instructions(t_instruction
-												*instruction, t_asm *tmp);
+t_asm						*parse_instructions(t_instruction *instruction,
+													t_asm *tmp, int i, int ret);
 int							is_label(t_instruction *instruction, char *str);
 int							is_name_instru(t_instruction *instruction,
 																	char *str);
@@ -68,5 +69,8 @@ void						wr_header(int fd, t_asm *l_asm, t_instruction *ins);
 void						wr_ins(int fd, t_instruction *ins);
 void						assign_size_ins(t_instruction *ins);
 int							get_byte_nb(t_instruction *ins, int i);
+
+
+void	check_len(t_asm *l_asm, char c);
 
 #endif

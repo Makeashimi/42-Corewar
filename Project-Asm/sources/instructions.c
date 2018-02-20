@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 15:27:18 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/18 13:45:34 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 ** instruction->param[3] = 0 ou :live;
 ** Enregistrer et comparer tous les parametres, les registres
 ** les directs, les indirects
-** Verifier la virgule !
 */
 
 static int	is_confurm_label(char c)

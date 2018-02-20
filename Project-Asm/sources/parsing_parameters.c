@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:22:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/15 18:12:26 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:57:34 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ char		*move_str(t_instruction *instruction, char *str, int i, int j)
 {
 	if ((i + 1) == g_op_tab[(int)instruction->index].nb_param)
 	{
-		while (str[j] != '\0' && ft_space(str[j]) == 0)
+		while (str[j] != '\0' && ft_space(str[j]) == 0 && str[j] != COMMENT_CHAR)
 		{
 			if (str[j] == SEPARATOR_CHAR)
 				error("Characters after parameters");
 			j++;
 		}
+		if (str[j] == COMMENT_CHAR)
+			return (NULL);
 		while (str[j] != '\0')
 		{
 			if (str[j] == COMMENT_CHAR)

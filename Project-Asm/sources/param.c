@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 22:15:02 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/14 15:15:40 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/20 14:57:45 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int		check_dir_ind(char *str)
 	count = 0;
 	if (str[i] != LABEL_CHAR && ft_isdigit(str[i]) == 0 && str[i] != '-')
 		return (0);
-	while (str[i] != '\0' && ft_space(str[i]) == 0 && str[i] != SEPARATOR_CHAR)
+	while (str[i] != '\0' && ft_space(str[i]) == 0 && str[i] != SEPARATOR_CHAR
+													&& str[i] != COMMENT_CHAR)
 	{
 		if (ft_isdigit(str[0]) == 1 && ft_isdigit(str[i]) == 0)
 			return (0);
@@ -61,8 +62,13 @@ int		check_dir(t_instruction *instruction, char *str, int i)
 	if (str[0] != DIRECT_CHAR)
 		return (0);
 	count = check_dir_ind(str + 1);
-	if (count == 0)
-		return (0);
+	if (count < 2)
+	{
+		if (count == 0)
+			return (0);
+		if (str[1] == LABEL_CHAR)
+			return (0);
+	}
 	if (!(instruction->param[i] = (char *)malloc(sizeof(char) * (count + 1))))
 		error("Malloc error");
 	instruction->param[i] = ft_strncpy(instruction->param[i], str + 1, count);
