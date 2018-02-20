@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/15 21:09:12 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/20 15:59:44 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,25 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 void	wr_header(int fd, t_asm *l_asm, t_instruction *start)
 {
 	t_header	h;
+	int			i;
 
+	i = 0;
 	bzero(&h, sizeof(h));
 	h.magic = rev_end(COREWAR_EXEC_MAGIC, 4);
 	while (start->next)
 		start = start->next;
 	h.prog_size = rev_end(start->address + start->size, 4);
-	ft_strcpy(h.prog_name, l_asm->champname);
-	ft_strcpy(h.comment, l_asm->comment);
+	while (l_asm->champname[i])
+	{
+		ft_strcat(h.prog_name, l_asm->champname[i++]);
+		ft_strcat(h.prog_name, (l_asm->champname[i]) ? "\n" : "");
+	}
+	i = 0;
+	while (l_asm->comment[i])
+	{
+		ft_strcat(h.comment, l_asm->comment[i++]);
+		ft_strcat(h.comment, (l_asm->comment[i]) ? "\n" : "");
+	}
 	write(fd, &h, sizeof(t_header));
 }
 
