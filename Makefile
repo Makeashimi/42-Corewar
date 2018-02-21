@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/02/14 15:27:28 by jcharloi         ###   ########.fr        #
+#    Updated: 2018/02/21 21:02:40 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME1 = asm
 NAME2 = corewar
 
 ASM_SRC_PATH = ./Project-Asm/sources/
-ASM_SRC_NAME = main.c parsing_name.c parsing_comment.c parsing_instructions.c parsing_parameters.c instructions.c tools.c param.c
+ASM_SRC_NAME = main.c parsing_name.c parsing_comment.c registre_name_comment.c parsing_instructions.c parsing_parameters.c instructions.c tools.c param.c
 ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 

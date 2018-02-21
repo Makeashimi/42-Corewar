@@ -6,39 +6,39 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:22:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/19 19:30:58 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/21 18:18:36 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-char		*move_str(t_instruction *instruction, char *str, int i, int j)
+char		*move_str(t_instruction *instruction, char *s, int i, int j)
 {
 	if ((i + 1) == g_op_tab[(int)instruction->index].nb_param)
 	{
-		while (str[j] != '\0' && ft_space(str[j]) == 0 && str[j] != COMMENT_CHAR)
+		while (s[j] != '\0' && ft_space(s[j]) == 0 && s[j] != COMMENT_CHAR)
 		{
-			if (str[j] == SEPARATOR_CHAR)
+			if (s[j] == SEPARATOR_CHAR)
 				error("Characters after parameters");
 			j++;
 		}
-		if (str[j] == COMMENT_CHAR)
+		if (s[j] == COMMENT_CHAR)
 			return (NULL);
-		while (str[j] != '\0')
+		while (s[j] != '\0')
 		{
-			if (str[j] == COMMENT_CHAR)
+			if (s[j] == COMMENT_CHAR)
 				return (NULL);
-			if (ft_space(str[j]) == 0)
+			if (ft_space(s[j]) == 0)
 				error("Characters after parameters");
 			j++;
 		}
 	}
-	while (str[j] != '\0' && str[j] != SEPARATOR_CHAR)
+	while (s[j] != '\0' && s[j] != SEPARATOR_CHAR)
 		j++;
 	j++;
-	while (ft_space(str[j]) == 1)
+	while (ft_space(s[j]) == 1)
 		j++;
-	return (str + j);
+	return (s + j);
 }
 
 void		check_param3(t_instruction *ins, char *str, int i)

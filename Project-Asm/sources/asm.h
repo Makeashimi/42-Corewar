@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/19 19:28:58 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/21 21:04:52 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,19 @@ typedef struct				s_asm
 int							ft_space(char c);
 int							is_all_space(char *str);
 t_asm						*begin_parse(t_asm *l_asm);
+int							get_last_line(t_asm *l_asm, t_asm **tmp, int *count,
+																	char *mes);
+void						check_characters_after(char *str, char *message);
+void						get_name(t_asm *l_asm, t_asm *tmp, int count,
+																		int i);
+void						get_comment(t_asm *l_asm, t_asm *tmp, int count,
+																		int i);
+int							count_content(t_asm *l_asm, char *str);
+void						registerr(t_asm *l_asm, t_asm *tmp, char **str,
+																		int i);
 void						check_next_content(t_asm *l_asm, char *str,
 														char *message, char c);
+void						check_len(t_asm *l_asm, char c);
 t_asm						*parse_instructions(t_instruction *instruction,
 													t_asm *tmp, int i, int ret);
 int							is_label(t_instruction *instruction, char *str);
@@ -61,8 +72,5 @@ int							check_dir(t_instruction *instruction, char *str,
 int							check_ind(t_instruction *instruction, char *str,
 																		int i);
 void						error(char *str);
-
-
-void	check_len(t_asm *l_asm, char c);
 
 #endif
