@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 15:33:18 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/21 21:03:50 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:27:14 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_len(t_asm *l_asm, char c)
 {
-	ft_printf("l_asm->len %d\n", l_asm->len);
+	//ft_printf("l_asm->len %d\n", l_asm->len);
 	if (c == 'e')
 	{
 		if (l_asm->len > PROG_NAME_LENGTH)

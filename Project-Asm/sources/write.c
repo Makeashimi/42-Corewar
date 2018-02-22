@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/22 14:30:19 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:38:25 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 {
 	int	i;
 	int	wr;
-	int	f;
 
 	i = -1;
 	while (ins->param[++i] && i < 3)
@@ -70,13 +69,10 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 		else
 		{
 			wr = ft_atoi(ins->param[i]);
-			f = get_byte_nb(ins, i) == 2 && ((short)wr <= 0);
+			wr = (get_byte_nb(ins, i) < 4) ? (short)wr : wr;
 			wr = (rev_end(wr, (wr < 0) ? 4 : get_byte_nb(ins, i)) >> (wr < 0 &&\
-					(ins->type[i] != 2 || g_op_tab[(int)ins->index].short_dir)\
-					? 16 : 0));
-			if (f)
-				wr = (short)wr >> 16;
-			ft_printf("DEBUG - %#x\n", wr);
+				(ins->type[i] != 2 || g_op_tab[(int)ins->index].short_dir)\
+				? 16 : 0));
 		}
 		write(fd, &wr, get_byte_nb(ins, i));
 	}
