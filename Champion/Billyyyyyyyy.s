@@ -1,7 +1,9 @@
 .name "Billyyyyyyyy"
-.comment "Un champion qui dechire"
+.comment "yooooo bitchyyyyyyyy"
 
-start:
-	
+start:	sti r1, %:live, %1
+		
 
 
+live:	live %42
+		zjmp :live
