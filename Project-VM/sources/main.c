@@ -31,16 +31,27 @@ void 	print_tab(const void *addr, size_t size)
 	size_t			i;
 	int				c;
 	int				j;
+	int             x;
 	int				count;
 
 	count = 0;
+	x = 0;
 	str = (unsigned char*)addr;
 	i = 0;
+	ft_printf("%4d    ", x);
 	while (i < size)
 	{
 		c = str[i];
-		ft_putchar(tab[c / 16]);
-		ft_putchar(tab[c % 16]);
+		if (i % 8 == 0)
+		{
+			ft_printf("\033[3;38;5;205m%c\033[0m", tab[c / 16]);
+			ft_printf("\033[3;38;5;205m%c\033[0m", tab[c % 16]);
+		}
+		else
+		{
+			ft_putchar(tab[c / 16]);
+			ft_putchar(tab[c % 16]);
+		}
 		i++;
 		count++;
 		if (i % 1 == 0)
@@ -50,6 +61,9 @@ void 	print_tab(const void *addr, size_t size)
 			count = 0;
 			j = 0;
 			ft_putchar('\n');
+			x = x + 64;
+			if (x != 4096)
+			ft_printf("%4d    ", x);
 		}
 	}
 }
@@ -58,7 +72,9 @@ int main(int ac, char **av)
 {
 	t_data	*data;
 	t_cor	*tmp;
+	int i;
 
+	i = 1;
 	if (ac < 3)
 		return (-1);
 	if ((data = init_data()) == NULL)
@@ -67,14 +83,23 @@ int main(int ac, char **av)
 		return (-1);
 	init_champ(data);
 	launch_champ(data);
+	init_instruction(data);
 	tmp = data->proc;
-	while (tmp)
-	{
-		if (*tmp->ptr == 0x02)
-			printf("%s\n", "cool story bro");
-		print_proc(tmp);
-		tmp = tmp->next;
-	}
 	print_tab(data->arene, 4096);
+	while (data->ctd > 0 && data->dump != 0)
+	{
+		battle(data);
+		if (i == data->ctd)
+		{
+			check_to_die(data);
+			i = 1;
+		}
+		i++;
+		data->dump--;
+		data->tour++;
+	}
+	ft_putchar('\n');
+	print_tab(data->arene, 4096);
+	printf("%d\n", data->tour);
 	return (0);
 }

@@ -49,7 +49,10 @@ t_data		*init_data()
 	data->proc = NULL;
 	data->verb = 0;
 	data->dump = -1;
+	data->tour = 1;
 	data->nb_champ = 0;
+	data->ctd = CYCLE_TO_DIE;
+	data->nbr_c = 0;
 	data->n = 0;
 	data->c_n[0] = 1;
 	data->c_n[1] = 2;
@@ -106,7 +109,7 @@ void	init_champ(t_data *data)
 	while (tmp)
 	{	
 		ft_memcpy((void *)&data->arene[4096 / data->nb_champ * (tmp->n_p - 1)], (void *)tmp->code, (size_t)tmp->size);
-		tmp->adr = &data->arene[4096 / data->nb_champ * (tmp->n_p - 1)];
+		tmp->adr = (4096 / data->nb_champ * (tmp->n_p - 1));
 		tmp = tmp->next;
 	}
 }

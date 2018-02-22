@@ -21,7 +21,32 @@ ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 
 VM_SRC_PATH = ./Project-VM/sources/
-VM_SRC_NAME = main.c parse_champ.c init_data.c check.c list_proc.c
+VM_SRC_NAME = 	main.c \
+				take_arg.c \
+				calc_ocp.c \
+				parse_champ.c \
+				init_data.c \
+				check.c \
+				list_proc.c \
+				op.c \
+				ft_battle.c \
+				ft_add.c \
+				ft_aff.c \
+				ft_and.c \
+				ft_fork.c \
+				ft_jump.c \
+				ft_ld.c \
+				ft_lfork.c \
+				ft_live.c \
+				ft_lld.c \
+				ft_lldi.c \
+				ft_or.c \
+				ft_st.c \
+				ft_sti.c \
+				ft_sub.c \
+				ft_xor.c \
+				ft_ldi.c
+
 VM_OBJ_PATH = ./Project-VM/objects/
 VM_OBJ_NAME = $(VM_SRC_NAME:.c=.o)
 
