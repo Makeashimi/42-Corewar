@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/19 19:32:16 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/21 21:05:52 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,145 +45,50 @@ static void		check_between(char *str, char c, char *message)
 	ft_strdel(&test);
 }
 
-int				count_content(t_asm *l_asm, char *str)
+static void		check_end_line(t_asm *l_asm, t_asm *tmp, int *i, char *message)
 {
-	int		i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '"')
+	while (ft_space(tmp->str[*i]) == 1)
+		(*i)++;
+	if (tmp->str[*i] == '\0' || tmp->str[*i] != '"' || tmp->str[*i] == '\n')
 	{
+		ft_printf(
+"Syntax error with the \"%s\" or no \"%s\" found", message, message);
+		error("");
+	}
+	(*i)++;
+	while (tmp->str[*i] != '\0' && tmp->str[*i] != '"')
+	{
+		(*i)++;
 		l_asm->len++;
-		i++;
-	}
-	if (str[i] == '"')
-		return (1);
-	return (0);
-}
-
-void			registerr(t_asm *l_asm, t_asm *tmp, char **str, int i)
-{
-	int		j;
-	int		o;
-
-	o = 0;
-	j = 0;
-	while (1)
-	{
-		while (tmp->str[i] != '\0' && tmp->str[i] != '"')
-			str[o][j++] = tmp->str[i++];
-		if (tmp->str[i] == '\0')
-		{
-			str[o][j] = '\0';
-			i = 0;
-			j = 0;
-			o++;
-			tmp = tmp->next;
-			if (!(str[o] = (char*)malloc(sizeof(char) * (l_asm->len + 1))))
-				error("Malloc error");
-		}
-		else if (tmp->str[i] == '"')
-		{
-			str[o][j] = '\0';
-			return ;
-		}
 	}
 }
 
-void			get_name_comment(t_asm *l_asm, t_asm *tmp, int count, int i)
-{
-	int		o;
-	int		j;
-
-	j = 0;
-	o = 0;
-	while (ft_space(tmp->str[i]) == 1)
-		i++;
-	if (tmp->str[i + 1] == NAME_CMD_STRING[1])
-	{
-		if (!(l_asm->champname = (char**)malloc(sizeof(char*) * (count + 1))))
-			error("Malloc error");
-		if (!(l_asm->champname[o] = (char*)malloc(sizeof(char) *
-															(l_asm->len + 1))))
-			error("Malloc error");
-		l_asm->champname[count] = NULL;
-		while (tmp->str[i] != '"')
-			i++;
-		i++;
-		registerr(l_asm, tmp, l_asm->champname, i);
-	}
-	else if (tmp->str[i + 1] == COMMENT_CMD_STRING[1])
-	{
-		if (!(l_asm->comment = (char**)malloc(sizeof(char*) * (count + 1))))
-			error("Malloc error");
-		if (!(l_asm->comment[o] = (char*)malloc(sizeof(char) *
-															(l_asm->len + 1))))
-			error("Malloc error");
-		l_asm->comment[count] = NULL;
-		while (tmp->str[i] != '"')
-			i++;
-		i++;
-		registerr(l_asm, tmp, l_asm->comment, i);
-	}
-}
-
-static t_asm	*check_content(t_asm *l_asm, t_asm *tmp, char c, char *message)
+static t_asm	*check_content(t_asm *l_asm, t_asm *tmp, char c, char *mes)
 {
 	t_asm	*cpy;
 	int		i;
-	int		test;
 	int		count;
 
 	count = 1;
-	test = 0;
 	i = 0;
 	l_asm->len = 0;
 	cpy = tmp;
 	while (tmp->str[i] != c)
 		i++;
 	i++;
-	check_between(tmp->str + i, c, message);
-	while (ft_space(tmp->str[i]) == 1)
-		i++;
-	if (tmp->str[i] == '\0' || tmp->str[i] != '"' || tmp->str[i] == '\n')
-	{
-		ft_printf(
-"Syntax error with the \"%s\" or no \"%s\" found", message, message);
-		error("");
-	}
-	i++;
-	while (tmp->str[i] != '\0' && tmp->str[i] != '"')
-	{
-		i++;
-		l_asm->len++;
-	}
+	check_between(tmp->str + i, c, mes);
+	check_end_line(l_asm, tmp, &i, mes);
 	if (tmp->str[i] == '\0')
 	{
 		cpy = tmp;
-		while (tmp != NULL && test == 0)
-		{
-			tmp = tmp->next;
-			test = count_content(l_asm, tmp->str);
-			count++;
-		}
-		if (tmp == NULL)
-		{
-			ft_printf("No \"%s\"", message);
-			error("");
-		}
-		i = 0;
-		check_len(l_asm, c);
+		i = get_last_line(l_asm, &tmp, &count, mes);
 		while (tmp->str[i] != '"')
 			i++;
 	}
 	i++;
-	while (ft_space(tmp->str[i]) == 1)
-		i++;
-	if (tmp->str[i] != '\0' && tmp->str[i] != COMMENT_CHAR)
-	{
-		ft_printf("Characters after \"%s\"", message);
-		error("");
-	}
-	get_name_comment(l_asm, cpy, count, 0);
+	check_characters_after(tmp->str + i, mes);
+	check_len(l_asm, c);
+	get_name(l_asm, cpy, count, 0);
 	return (tmp);
 }
 
