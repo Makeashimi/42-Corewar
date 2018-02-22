@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/02/22 11:04:34 by varichar         ###   ########.fr        #
+#    Updated: 2018/02/22 11:33:15 by varichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ ASM_SRC_NAME =	endian.c\
 				tools.c\
 				write.c\
 				size.c
+ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 
 VM_SRC_PATH = ./Project-VM/sources/
