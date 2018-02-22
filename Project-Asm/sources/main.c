@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/22 11:02:11 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/22 11:38:50 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ void	write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	char	*cpy;
 	int		fd;
 
-	(void)ins;
-	(void)l_asm;
 	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 5))))
 		error("Malloc error");
 	cpy = strcpy_untilstr(cpy, str, ".s\0");

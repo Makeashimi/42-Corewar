@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/20 15:59:44 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/22 14:30:19 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,25 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 {
 	int	i;
 	int	wr;
+	int	f;
 
 	i = -1;
 	while (ins->param[++i] && i < 3)
 	{
 		if (ins->type[i] == 1)
-		{
 			wr = (char)ft_atoi(ins->param[i]);
-		}
 		else if (ins->param[i][0] == ':')
-		{
 			wr = get_label_addr(start, ins, &(ins->param[i][1]), i);
-		}
 		else
 		{
 			wr = ft_atoi(ins->param[i]);
-			wr = rev_end(wr, (wr < 0) ? 4 : get_byte_nb(ins, i)) >> (wr < 0 &&\
+			f = get_byte_nb(ins, i) == 2 && ((short)wr <= 0);
+			wr = (rev_end(wr, (wr < 0) ? 4 : get_byte_nb(ins, i)) >> (wr < 0 &&\
 					(ins->type[i] != 2 || g_op_tab[(int)ins->index].short_dir)\
-					? 16 : 0);
+					? 16 : 0));
+			if (f)
+				wr = (short)wr >> 16;
+			ft_printf("DEBUG - %#x\n", wr);
 		}
 		write(fd, &wr, get_byte_nb(ins, i));
 	}

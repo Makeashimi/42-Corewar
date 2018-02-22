@@ -23,7 +23,7 @@ entry:
 wall_prep:
 	ld		%0, r2
 	ld		%0, r16
-
+/*
 wall:
 	live	%4902343
 	st		r2, -24
