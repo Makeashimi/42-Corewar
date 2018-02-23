@@ -6,13 +6,13 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/02/22 11:33:15 by varichar         ###   ########.fr        #
+#    Updated: 2018/02/22 12:07:44 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = GCC
 DEBUGFLAGS = -ggdb
-CFLAGS = -Wall -Wextra -Werror -MMD $(DEBUGFLAGS)
+CFLAGS = -Wall -Wextra -Werror -MMD
 NAME1 = asm
 NAME2 = corewar
 
@@ -27,6 +27,7 @@ ASM_SRC_NAME =	endian.c\
 				parsing_comment.c\
 				parsing_name.c\
 				tools.c\
+				label.c \
 				write.c\
 				size.c
 ASM_OBJ_PATH = ./Project-Asm/objects/

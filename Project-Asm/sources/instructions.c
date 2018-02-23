@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/18 13:45:34 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/22 14:59:59 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 ** les directs, les indirects
 */
 
-static int	is_confurm_label(char c)
+int			is_confurm_label(char c)
 {
 	int		i;
 

@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/22 11:02:45 by varichar         ###   ########.fr       */
+/*   Updated: 2018/02/22 15:00:19 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void						check_len(t_asm *l_asm, char c);
 t_asm						*parse_instructions(t_instruction *instruction,
 													t_asm *tmp, int i, int ret);
 int							is_label(t_instruction *instruction, char *str);
+int							is_confurm_label(char c);
 int							is_name_instru(t_instruction *instruction,
 																	char *str);
 t_instruction				*link_instruction(t_instruction **instruction);
@@ -73,6 +74,8 @@ int							check_dir(t_instruction *instruction, char *str,
 																		int i);
 int							check_ind(t_instruction *instruction, char *str,
 																		int i);
+void						check_label(t_instruction *instruction,
+										t_asm *l_asm, char **argv, int argc);
 void						error(char *str);
 int							rev_end(int val, char size);
 
@@ -80,5 +83,8 @@ void						wr_header(int fd, t_asm *l_asm, t_instruction *ins);
 void						wr_ins(int fd, t_instruction *ins);
 void						assign_size_ins(t_instruction *ins);
 int							get_byte_nb(t_instruction *ins, int i);
+
+void						write_output(char *str, t_asm *l_asm,
+															t_instruction *ins);
 
 #endif
