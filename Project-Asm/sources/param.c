@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 22:15:02 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/23 21:47:49 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/27 19:52:34 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		check_reg(t_instruction *instruction, char *str, int j)
 {
+	char 	*cpy;
 	int		number;
 	int		i;
 
@@ -29,21 +30,20 @@ int		check_reg(t_instruction *instruction, char *str, int j)
 	number = ft_atoi(str + 1);
 	if (number > REG_NUMBER || number <= 0)
 		return (0);
-	instruction->param[j] = ft_strdup(ft_itoa(number));
+	cpy = ft_itoa(number);
+	instruction->param[j] = ft_strdup(cpy);
 	instruction->type[j] = REG_CODE;
+	ft_strdel(&cpy);
 	return (1);
 }
 
-int		check_dir_ind(char *str)
+int		next(char *str)
 {
 	int		i;
 	int		count;
 
-	i = 0;
 	count = 0;
-	//%-r1
-	if (str[i] != LABEL_CHAR && ft_isdigit(str[i]) == 0 && str[i] != '-')
-		return (0);
+	i = 0;
 	while (str[i] != '\0' && ft_space(str[i]) == 0 && str[i] != SEPARATOR_CHAR
 													&& str[i] != COMMENT_CHAR)
 	{
@@ -54,6 +54,32 @@ int		check_dir_ind(char *str)
 		i++;
 		count++;
 	}
+	return (count);
+}
+
+int		check_dir_ind(char *str)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	if (str[i] != LABEL_CHAR && ft_isdigit(str[i]) == 0 && str[i] != '-')
+		return (0);
+	if (str[i] == '-')
+	{
+		count = 1;
+		i++;
+		while (str[i] != '\0' && ft_space(str[i]) == 0 && str[i] != SEPARATOR_CHAR
+													&& str[i] != COMMENT_CHAR)
+		{
+			if (ft_isdigit(str[i]) == 0)
+				return (0);
+			i++;
+			count++;
+		}
+	}
+	else
+		count = next(str);
 	return (count);
 }
 

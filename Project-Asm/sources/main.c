@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcharloi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/23 22:13:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/23 22:13:58 by jcharloi         ###   ########.fr       */
+/*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
+/*   Updated: 2018/02/27 21:13:05 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-/*
-** invalid20 %-r1
-*/
 
 t_asm	*create_str(char *str)
 {
@@ -68,6 +64,55 @@ void	parse_next(t_instruction **instruction, t_asm *tmp)
 	}
 }
 
+void 	remove_asm(t_asm **l_asm, int i)
+{
+	t_asm	*tmp;
+	t_asm	*next;
+
+	tmp = *l_asm;
+	while (tmp->champname[i] != NULL)
+	{
+		ft_strdel(&tmp->champname[i]);
+		i++;
+	}
+	free(tmp->champname);
+	i = 0;
+	while (tmp->comment[i] != NULL)
+	{
+		ft_strdel(&tmp->comment[i]);
+		i++;
+	}
+	free(tmp->comment);
+	while (tmp != NULL)
+	{
+		next = tmp->next;
+		free(tmp->str);
+		free(tmp);
+		tmp = next;
+	}
+}
+
+void	remove_instruction(t_instruction **instruction, int i)
+{
+	t_instruction	*tmp;
+	t_instruction	*next;
+
+	tmp = *instruction;
+	(void)i;
+	tmp = *instruction;
+	while (tmp != NULL)
+	{
+		next = tmp->next;
+		ft_strdel(&tmp->label);
+		ft_strdel(&tmp->name);
+		free(tmp->param[0]);
+		free(tmp->param[1]);
+		free(tmp->param[2]);
+		free(tmp);
+		tmp = next;
+	}
+}
+
 int		main(int argc, char **argv)
 {
 	t_instruction	*instruction;
@@ -94,5 +139,7 @@ int		main(int argc, char **argv)
 	tmp = begin_parse(l_asm);
 	parse_next(&instruction, tmp);
 	check_label(instruction, l_asm, argv, argc);
+	remove_asm(&l_asm, 0);
+	remove_instruction(&instruction, 0);
 	return (0);
 }
