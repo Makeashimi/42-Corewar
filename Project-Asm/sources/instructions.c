@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/22 14:59:59 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/28 20:10:15 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int			is_confurm_label(char c)
 	return (0);
 }
 
-int			is_label(t_instruction *instruction, char *str)
+int			is_label(t_instruction *instruction, char *str, int o, int ret)
 {
-	int			i;
+	int		i;
 
 	i = 0;
 	while (str[i] != '\0' && str[i] != LABEL_CHAR)
@@ -67,17 +67,20 @@ int			is_label(t_instruction *instruction, char *str)
 	}
 	if (str[i] == '\0' || i < 1)
 		return (0);
-	if (!(instruction->label = (char*)malloc(sizeof(char) * (i + 1))))
-		error("Malloc error");
-	instruction->label = strcpy_until(instruction->label, str, ':');
-	instruction->label[i] = '\0';
+	if (ret == 1)
+	{
+		if (!(instruction->label[o] = (char*)malloc(sizeof(char) * (i + 1))))
+			error("Malloc error");
+		instruction->label[o] = strcpy_until(instruction->label[o], str, ':');
+		instruction->label[o][i] = '\0';
+	}
 	return (1);
 }
 
 int			is_name_instru(t_instruction *instruction, char *str)
 {
-	int			len;
-	int			i;
+	int		len;
+	int		i;
 
 	len = 0;
 	i = 0;

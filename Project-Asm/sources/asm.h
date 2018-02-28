@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/22 15:00:19 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/02/28 19:40:34 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct				s_instruction
 {
-	char					*label;
+	char					**label;
 	char					*name;
 	char					index;
 	int						size;
@@ -60,8 +60,8 @@ void						check_next_content(t_asm *l_asm, char *str,
 														char *message, char c);
 void						check_len(t_asm *l_asm, char c);
 t_asm						*parse_instructions(t_instruction *instruction,
-													t_asm *tmp, int i, int ret);
-int							is_label(t_instruction *instruction, char *str);
+													t_asm *tmp, int i);
+int			is_label(t_instruction *instruction, char *str, int o, int ret);
 int							is_confurm_label(char c);
 int							is_name_instru(t_instruction *instruction,
 																	char *str);
