@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 12:05:34 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/02 14:27:03 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/02 14:43:29 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	cmp_label(t_instruction *instruction, char *str)
 		o = 0;
 		while (cpy->label[o] != NULL)
 		{
-			ft_printf("%s\n", cpy->label[o]);
+			//ft_printf("%s\n", cpy->label[o]);
 			if (ft_strcmp(cpy->label[o], str) == 0)
 				return (1);
 			o++;

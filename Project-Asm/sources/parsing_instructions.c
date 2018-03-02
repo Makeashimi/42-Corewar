@@ -83,6 +83,32 @@ static	int		count_label(t_instruction *instruction, t_asm *tmp)
 	return (count);
 }
 
+char	*instru(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == LABEL_CHAR)
+		{
+			i++;
+			//ft_printf("ici : %s\n", str + i);
+			while (ft_space(str[i]) == 1)
+				i++;
+			///ft_printf("ici : %s\n", str + i);
+			if (str[i] != '\0' && str[i] != COMMENT_CHAR)
+			{
+				//ft_printf("coucou");
+				return (str + i);
+			}
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+
 t_asm	*parse_instructions(t_instruction *instruction, t_asm *tmp,
 															int i)
 {
@@ -101,10 +127,13 @@ t_asm	*parse_instructions(t_instruction *instruction, t_asm *tmp,
 	if (!(instruction->label = (char**)malloc(sizeof(char*) * (count + 1))))
 		error("Malloc error");
 	instruction->label[count] = NULL;
+	//ft_printf("au debut : %s\n", tmp->str + i);
 	while (tmp != NULL && is_label(instruction, tmp->str + i, o, 1) == 1)
 	{
-		tmp = tmp->next;
 		i = 0;
+		if ((tmp->str = instru(tmp->str + i)) != NULL)
+			break ;
+		tmp = tmp->next;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
 			tmp = tmp->next;
 		if (tmp == NULL)
@@ -113,11 +142,12 @@ t_asm	*parse_instructions(t_instruction *instruction, t_asm *tmp,
 			i++;
 		o++;
 	}
+	//ft_printf("COUCOU C'EST MOI %s\n", tmp->str + i);
 	if (is_name_instru(instruction, tmp->str + i) == 0)
 		error("Syntax error with the label or the instruction");
 	tmp->str = move_to_param(tmp->str + i);
 	if (check_param(instruction, tmp->str) == 0)
 		error("Syntax error with the params of the instruction");
-	ft_printf("ICI : %s\n", tmp->str);
+	//ft_printf("ICI : %s\n", tmp->str);
 	return (tmp);
 }
