@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing_instructions.c                             :+:      :+:    :+:   */
@@ -70,6 +70,7 @@ static	int		count_label(t_instruction *instruction, t_asm *tmp)
 		i++;
 	while (tmp != NULL && is_label(instruction, tmp->str + i, 0, 0) == 1)
 	{
+		count++;
 		tmp = tmp->next;
 		i = 0;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
@@ -78,7 +79,6 @@ static	int		count_label(t_instruction *instruction, t_asm *tmp)
 			return (count);
 		while (ft_space(tmp->str[i]) == 1)
 			i++;
-		count++;
 	}
 	return (count);
 }
@@ -87,7 +87,7 @@ t_asm	*parse_instructions(t_instruction *instruction, t_asm *tmp,
 															int i)
 {
 	int		count;
-	int 	o;
+	int		o;
 
 	o = 0;
 	while (tmp != NULL && is_all_space(tmp->str) == 1)
