@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 12:05:34 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/02 14:43:29 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:30:30 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,11 @@ static int	cmp_label(t_instruction *instruction, char *str)
 
 	o = 0;
 	cpy = instruction;
-	//ft_printf("%s\n", str);
 	while (cpy != NULL)
 	{
 		o = 0;
 		while (cpy->label[o] != NULL)
 		{
-			//ft_printf("%s\n", cpy->label[o]);
 			if (ft_strcmp(cpy->label[o], str) == 0)
 				return (1);
 			o++;
@@ -66,18 +64,6 @@ void		check_label(t_instruction *instruction, t_asm *l_asm,
 	t_instruction	*tmp;
 
 	tmp = instruction;
-	// int o = 0;
-	// while (tmp != NULL)
-	// {
-	// 	while (tmp->label[o] != NULL)
-	// 	{
-	// 		ft_printf("cccc");
-	// 		ft_printf("%s\n", tmp->label[o]);
-	// 		o++;
-	// 	}
-	// 	tmp = tmp->next;
-	// }
-	// exit(0);
 	while (tmp != NULL)
 	{
 		if (tmp->param[0] != NULL && tmp->param[0][0] == LABEL_CHAR)

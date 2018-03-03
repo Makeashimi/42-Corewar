@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 22:15:02 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/27 19:52:34 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/02 18:34:47 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		check_reg(t_instruction *instruction, char *str, int j)
 {
-	char 	*cpy;
+	char	*cpy;
 	int		number;
 	int		i;
 
@@ -69,8 +69,8 @@ int		check_dir_ind(char *str)
 	{
 		count = 1;
 		i++;
-		while (str[i] != '\0' && ft_space(str[i]) == 0 && str[i] != SEPARATOR_CHAR
-													&& str[i] != COMMENT_CHAR)
+		while (str[i] != '\0' && ft_space(str[i]) == 0 &&
+							str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
 		{
 			if (ft_isdigit(str[i]) == 0)
 				return (0);

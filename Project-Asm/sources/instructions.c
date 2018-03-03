@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/28 20:10:15 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:12:01 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@
 ** Enregistrer et comparer tous les parametres, les registres
 ** les directs, les indirects
 */
+
+char		*move_to_param(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0' && ft_space(str[i]) == 0)
+		i++;
+	if (str[i] == 0)
+		error("No parameters");
+	while (str[i] != '\0' && ft_space(str[i]) == 1)
+		i++;
+	if (str[i] == 0)
+		error("No parameters");
+	return (str + i);
+}
 
 int			is_confurm_label(char c)
 {

@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/28 19:40:34 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:12:35 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,13 @@ void						check_next_content(t_asm *l_asm, char *str,
 void						check_len(t_asm *l_asm, char c);
 t_asm						*parse_instructions(t_instruction *instruction,
 													t_asm *tmp, int i);
-int			is_label(t_instruction *instruction, char *str, int o, int ret);
+int							is_label(t_instruction *instruction, char *str,
+																int o, int ret);
 int							is_confurm_label(char c);
 int							is_name_instru(t_instruction *instruction,
 																	char *str);
 t_instruction				*link_instruction(t_instruction **instruction);
+char						*move_to_param(char *str);
 int							check_param(t_instruction *instruction, char *tmp);
 t_instruction				*get_last_instru(t_instruction *instruction);
 int							check_reg(t_instruction *instruction, char *str,
