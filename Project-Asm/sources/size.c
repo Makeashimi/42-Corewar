@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 16:30:18 by varichar          #+#    #+#             */
-/*   Updated: 2018/02/15 21:08:07 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/04 18:36:40 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,18 @@ int		get_byte_nb(t_instruction *ins, int i)
 	else
 		return ((ins->type[i] == 2 && !g_op_tab[(int)(ins->index)].short_dir) ?\
 			4 : 2);
+}
+
+int		find_label(char *label, char **llabel)
+{
+	if (label && *llabel)
+	{
+		while (*llabel)
+		{
+			if (ft_strcmp(*llabel, label) == 0)
+				return (1);
+			llabel++;
+		}
+	}
+	return (0);
 }

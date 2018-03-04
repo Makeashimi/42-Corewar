@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/02 19:12:35 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/04 18:37:46 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int							get_byte_nb(t_instruction *ins, int i);
 
 void						write_output(char *str, t_asm *l_asm,
 															t_instruction *ins);
+int							find_label(char *label, char **llabel);
 
 #endif
