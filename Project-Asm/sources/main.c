@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 12:13:01 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/03 14:07:51 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/04 19:02:51 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,6 @@ void	parse_next(t_instruction **instruction, t_asm *tmp)
 		if (tmp != NULL)
 			tmp = tmp->next;
 		o = 0;
-		while (cpy->label[o] != NULL)
-		{
-			ft_printf("\nlabel[%d] : %s et ", o, cpy->label[o]);
-			o++;
-		}
-		ft_printf("name : %s\n", cpy->name);
 		if (check_next_tmp(tmp) == 0)
 			break ;
 	}

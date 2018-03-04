@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/03/04 18:39:28 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/04 19:03:23 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 	{
 		if (find_label(label, start->label)) //label && start->label && ft_strcmp(start->label, label) == 0)
 		{
-			ft_printf("DEBUG - je suis ici\n");
 			if (start->address > ins->address)
 			{
 				addr = rev_end(start->address - ins->address, (ins->type[i] ==\
