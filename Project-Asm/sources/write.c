@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/03/05 17:53:12 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:17:10 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 						2);
 			}
 			else
-				addr = rev_end(start->address - ins->address, 4) >> 16;
+			{
+				addr = rev_end(start->address - ins->address, 4) >>\
+					   ((ins->type[i] == 2 &&\
+						 !g_op_tab[(int)(ins->index)].short_dir) ? 0 : 16);
+			}
 			return (addr);
 		}
 		start = start->next;
@@ -65,17 +69,17 @@ void	wr_param(int fd, t_instruction *start, t_instruction *ins)
 		if (ins->type[i] == 1)
 			wr = (char)ft_atoi(ins->param[i]);
 		else if (ins->param[i][0] == ':')
+		{
 			wr = get_label_addr(start, ins, &(ins->param[i][1]), i);
+		}
 		else
 		{
 			wr = ft_atoi(ins->param[i]);
-			ft_printf("%x\n", wr);
 			wr = rev_end(wr, (wr < 0 || (get_byte_nb(ins, i) == 2 && wr >\
 				65535)) ? 4 : get_byte_nb(ins, i)) >> ((wr < 0 ||\
 				(get_byte_nb(ins, i) == 2 && wr > 65535)) && (ins->type[i] !=\
 					2 || g_op_tab[(int)ins->index].short_dir) ? 16 : 0);
 		}
-		ft_printf("%#x\n", wr);
 		write(fd, &wr, get_byte_nb(ins, i));
 	}
 }

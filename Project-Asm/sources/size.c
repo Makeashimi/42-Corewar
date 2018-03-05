@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 16:30:18 by varichar          #+#    #+#             */
-/*   Updated: 2018/03/05 17:43:36 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/05 18:41:04 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	assign_size_ins(t_instruction *ins)
 	offset = 0;
 	while (ins)
 	{
-		ft_printf("name : %s\n", ins->name);
 		ins->address = offset;
 		ins->size = 0;
 		ins->size += (ins->name) ? 1 : 0;
