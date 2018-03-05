@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:12:51 by varichar          #+#    #+#             */
-/*   Updated: 2018/03/05 19:17:10 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/05 19:23:36 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		get_label_addr(t_instruction *start, t_instruction *ins, char *label,\
 			else
 			{
 				addr = rev_end(start->address - ins->address, 4) >>\
-					   ((ins->type[i] == 2 &&\
-						 !g_op_tab[(int)(ins->index)].short_dir) ? 0 : 16);
+					((ins->type[i] == 2 &&\
+						!g_op_tab[(int)(ins->index)].short_dir) ? 0 : 16);
 			}
 			return (addr);
 		}
