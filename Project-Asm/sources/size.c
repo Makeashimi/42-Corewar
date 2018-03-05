@@ -6,7 +6,7 @@
 /*   By: varichar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 16:30:18 by varichar          #+#    #+#             */
-/*   Updated: 2018/03/04 18:36:40 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/05 14:44:54 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ void	assign_size_ins(t_instruction *ins)
 	offset = 0;
 	while (ins)
 	{
+		ft_printf("name : %s\n", ins->name);
 		ins->address = offset;
 		ins->size = 0;
-		ins->size += 1;
-		ins->size += (g_op_tab[(int)ins->index].ocp ? 1 : 0);
+		ins->size += (ins->name) ? 1 : 0;
+		if (ins->name)
+			ins->size += (g_op_tab[(int)ins->index].ocp ? 1 : 0);
 		i = 0;
 		while (ins->param[i])
 		{
