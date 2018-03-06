@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 22:15:02 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/02 18:34:47 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/06 14:10:17 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int		check_dir(t_instruction *instruction, char *str, int i)
 {
 	int		count;
 
-	count = 0;
 	if (str[0] != DIRECT_CHAR)
 		return (0);
 	count = check_dir_ind(str + 1);

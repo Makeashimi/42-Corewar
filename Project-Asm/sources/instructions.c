@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/02 19:12:01 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/06 14:54:27 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,12 @@ int			is_label(t_instruction *instruction, char *str, int o, int ret)
 		return (0);
 	if (ret == 1)
 	{
+		//ft_printf("truc a enregistrer : %s\n", str);
 		if (!(instruction->label[o] = (char*)malloc(sizeof(char) * (i + 1))))
 			error("Malloc error");
 		instruction->label[o] = strcpy_until(instruction->label[o], str, ':');
 		instruction->label[o][i] = '\0';
+		//ft_printf("instruction->label[o] : %s\n", instruction->label[o]);
 	}
 	return (1);
 }

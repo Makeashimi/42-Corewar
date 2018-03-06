@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 18:12:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/21 21:05:52 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/06 21:34:14 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void		check_between(char *str, char c, char *message)
 	test = NULL;
 	if (ft_space(str[0]) == 0 && str[0] != '"')
 	{
-		if (c == 'e')
+		if (c == NAME_CMD_STRING[ft_strlen(NAME_CMD_STRING) - 1])
 			test = ft_strdup(NAME_CMD_STRING);
-		else if (c == 't')
+		else if (c == COMMENT_CMD_STRING[ft_strlen(COMMENT_CMD_STRING) - 1])
 			test = ft_strdup(COMMENT_CMD_STRING);
 		ft_printf("Syntax error between %s and \"%s\"", test, message);
 		error("");
@@ -95,22 +95,26 @@ static t_asm	*check_content(t_asm *l_asm, t_asm *tmp, char c, char *mes)
 static t_asm	*is_name_or_comment(t_asm *l_asm, t_asm *tmp, int i)
 {
 	if (ft_strncmp(NAME_CMD_STRING, tmp->str + i,
-										ft_strlen(NAME_CMD_STRING)) == 0)
+											ft_strlen(NAME_CMD_STRING)) == 0)
 	{
-		tmp = check_content(l_asm, tmp, 'e', "name of champ");
+		tmp = check_content(l_asm, tmp,
+	NAME_CMD_STRING[ft_strlen(NAME_CMD_STRING) - 1], "name of champ");
 		tmp = tmp->next;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
 			tmp = tmp->next;
-		tmp = check_content(l_asm, tmp, 't', "comment");
+		tmp = check_content(l_asm, tmp,
+	COMMENT_CMD_STRING[ft_strlen(COMMENT_CMD_STRING) - 1], COMMENT_CMD_STRING);
 	}
 	else if (ft_strncmp(COMMENT_CMD_STRING, tmp->str + i,
 									ft_strlen(COMMENT_CMD_STRING)) == 0)
 	{
-		tmp = check_content(l_asm, tmp, 't', "comment");
+		tmp = check_content(l_asm, tmp,
+	COMMENT_CMD_STRING[ft_strlen(COMMENT_CMD_STRING) - 1], COMMENT_CMD_STRING);
 		tmp = tmp->next;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
 			tmp = tmp->next;
-		tmp = check_content(l_asm, tmp, 'e', "name of champ");
+		tmp = check_content(l_asm, tmp,
+	NAME_CMD_STRING[ft_strlen(NAME_CMD_STRING) - 1], "name of champ");
 	}
 	else
 		error("Syntax error with the .name or .comment");
@@ -120,7 +124,6 @@ static t_asm	*is_name_or_comment(t_asm *l_asm, t_asm *tmp, int i)
 t_asm			*begin_parse(t_asm *l_asm)
 {
 	t_asm	*tmp;
-	t_asm	*cpy;
 	int		i;
 
 	i = 0;
@@ -131,7 +134,6 @@ t_asm			*begin_parse(t_asm *l_asm)
 		error("Nothing found");
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
-	cpy = tmp;
 	tmp = is_name_or_comment(l_asm, tmp, i);
 	tmp = tmp->next;
 	if (tmp == NULL)

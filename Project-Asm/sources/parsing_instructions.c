@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:29:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/02 19:11:53 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/06 21:40:22 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 t_asm			*get_tmp(t_asm *tmp)
 {
-	int		j;
 	int		i;
 
 	i = 0;
-	j = 0;
 	while (tmp->str[i] != '\0' && tmp->str[i] != LABEL_CHAR)
 		i++;
 	if (tmp->str[i] == LABEL_CHAR)
@@ -37,8 +35,31 @@ t_asm			*get_tmp(t_asm *tmp)
 	return (tmp);
 }
 
+char			*instru(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == LABEL_CHAR)
+		{
+			i++;
+			if (str[i] == '\0' || str[i] == COMMENT_CHAR)
+				return (str);
+			while (ft_space(str[i]) == 1)
+				i++;
+			if (str[i] != '\0' && str[i] != COMMENT_CHAR)
+				return (str + i);
+		}
+		i++;
+	}
+	return (str);
+}
+
 static	int		count_label(t_instruction *instruction, t_asm *tmp)
 {
+	char	*str;
 	int		count;
 	int		i;
 
@@ -49,6 +70,13 @@ static	int		count_label(t_instruction *instruction, t_asm *tmp)
 	while (tmp != NULL && is_label(instruction, tmp->str + i, 0, 0) == 1)
 	{
 		count++;
+		str = ft_strdup(instru(tmp->str));
+		if (ft_strcmp(tmp->str, str) != 0)
+		{
+			ft_strdel(&str);
+			return (count);
+		}
+		ft_strdel(&str);
 		tmp = tmp->next;
 		i = 0;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
@@ -61,33 +89,18 @@ static	int		count_label(t_instruction *instruction, t_asm *tmp)
 	return (count);
 }
 
-char			*instru(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == LABEL_CHAR)
-		{
-			i++;
-			while (ft_space(str[i]) == 1)
-				i++;
-			if (str[i] != '\0' && str[i] != COMMENT_CHAR)
-				return (str + i);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
 t_asm			*instru_next(t_asm *tmp, t_instruction *ins, int i, int o)
 {
+	char	*cpy;
+
 	while (tmp != NULL && is_label(ins, tmp->str + i, o, 1) == 1)
 	{
 		i = 0;
-		if ((tmp->str = instru(tmp->str + i)) != NULL)
+		cpy = tmp->str;
+		tmp->str = ft_strdup(instru(tmp->str + i));
+		if (ft_strcmp(cpy, tmp->str) != 0)
 			break ;
+		ft_strdel(&cpy);
 		tmp = tmp->next;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
 			tmp = tmp->next;
@@ -97,9 +110,12 @@ t_asm			*instru_next(t_asm *tmp, t_instruction *ins, int i, int o)
 			i++;
 		o++;
 	}
+	ft_strdel(&cpy);
 	if (is_name_instru(ins, tmp->str + i) == 0)
 		error("Syntax error with the label or the instruction");
-	tmp->str = move_to_param(tmp->str + i);
+	cpy = tmp->str;
+	tmp->str = ft_strdup(move_to_param(tmp->str + i));
+	ft_strdel(&cpy);
 	if (check_param(ins, tmp->str) == 0)
 		error("Syntax error with the params of the instruction");
 	return (tmp);

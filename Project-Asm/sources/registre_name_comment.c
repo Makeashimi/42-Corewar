@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 21:02:18 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/21 21:04:59 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/06 21:33:02 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ void	get_comment(t_asm *l_asm, t_asm *tmp, int count, int i)
 
 void	get_name(t_asm *l_asm, t_asm *tmp, int count, int i)
 {
-	int		j;
-
-	j = 0;
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
 	if (tmp->str[i + 1] == NAME_CMD_STRING[1])
@@ -78,5 +75,6 @@ void	get_name(t_asm *l_asm, t_asm *tmp, int count, int i)
 		i++;
 		registerr(l_asm, tmp, l_asm->champname, i);
 	}
-	get_comment(l_asm, tmp, count, i);
+	else
+		get_comment(l_asm, tmp, count, i);
 }

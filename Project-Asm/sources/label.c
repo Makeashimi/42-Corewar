@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 12:05:34 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/04 18:40:35 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/06 22:11:20 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ void		write_output(char *str, t_asm *l_asm, t_instruction *ins)
 
 	(void)l_asm;
 	(void)ins;
+	//ft_printf("str %s\n", str);
 	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 5))))
 		error("Malloc error");
 	cpy = strcpy_untilstr(cpy, str, ".s\0");
+	ft_printf("str %s\n", cpy);
 	cpy = ft_strcat(cpy, ".cor");
 	fd = open(cpy, O_RDWR | O_CREAT | O_TRUNC, FILE_RIGHTS);
 	assign_size_ins(ins);
@@ -42,7 +44,6 @@ static int	cmp_label(t_instruction *instruction, char *str)
 	t_instruction	*cpy;
 	int				o;
 
-	o = 0;
 	cpy = instruction;
 	while (cpy != NULL)
 	{
@@ -81,6 +82,7 @@ void		check_label(t_instruction *instruction, t_asm *l_asm,
 			if (cmp_label(instruction, tmp->param[2] + 1) == 0)
 				error("Wrong label name");
 		}
+		
 		tmp = tmp->next;
 	}
 	write_output(argv[argc - 1], l_asm, instruction);
