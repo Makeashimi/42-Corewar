@@ -6,39 +6,11 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 21:16:54 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/06 14:54:27 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 17:13:07 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-/*
-** T_REG -> 1
-** T_DIR -> 2
-** T_DIR ou T_REG -> 3
-** (NEVER APPEARED)T_IND -> 4
-** T_REG ou T_IND -> 5
-** T_DIR ou T_IND -> 6
-** T_DIR ou T_REG ou T_IND -> 7
-** ------------------------
-** if (g_op_tab[instruction->index].arg[0] == 1)
-**	 T_REG needed
-** else if (g_op_tab[instruction->index].arg[0] == 2)
-** 	 T_DIR needed
-** else if (g_op_tab[instruction->index].arg[0] == 3)
-** 	 T_DIR OU T_REG needed
-** else if (g_op_tab[instruction->index].arg[0] == 5)
-** 	 T_REG ou T_IND needed
-** else if (g_op_tab[instruction->index].arg[0] == 6)
-** 	 T_DIR ou T_IND needed
-** else if (g_op_tab[instruction->index].arg[0] == 7)
-**	 T_DIR OU T_REG OU T_IND needed
-** instruction->param[1] = 1;
-** instruction->param[2] = 0 ou :live;
-** instruction->param[3] = 0 ou :live;
-** Enregistrer et comparer tous les parametres, les registres
-** les directs, les indirects
-*/
 
 char		*move_to_param(char *str)
 {
@@ -85,12 +57,10 @@ int			is_label(t_instruction *instruction, char *str, int o, int ret)
 		return (0);
 	if (ret == 1)
 	{
-		//ft_printf("truc a enregistrer : %s\n", str);
 		if (!(instruction->label[o] = (char*)malloc(sizeof(char) * (i + 1))))
 			error("Malloc error");
 		instruction->label[o] = strcpy_until(instruction->label[o], str, ':');
 		instruction->label[o][i] = '\0';
-		//ft_printf("instruction->label[o] : %s\n", instruction->label[o]);
 	}
 	return (1);
 }
@@ -121,4 +91,26 @@ int			is_name_instru(t_instruction *instruction, char *str)
 		return (0);
 	instruction->index = i;
 	return (1);
+}
+
+char		*instru(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == LABEL_CHAR)
+		{
+			i++;
+			if (str[i] == '\0' || str[i] == COMMENT_CHAR)
+				return (str);
+			while (ft_space(str[i]) == 1)
+				i++;
+			if (str[i] != '\0' && str[i] != COMMENT_CHAR)
+				return (str + i);
+		}
+		i++;
+	}
+	return (str);
 }

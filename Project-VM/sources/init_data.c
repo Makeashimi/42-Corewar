@@ -12,7 +12,29 @@
 
 #include "corewar.h"
 
-t_data		*init_data()
+int			launch_champ(t_data *data)
+{
+	t_champ	*tmp;
+	int		i;
+
+	i = 1;
+	tmp = data->champ;
+	while (i <= data->nb_champ)
+	{
+		if (i == tmp->n_p)
+		{
+			if (add_proc(new_proc(tmp), data) == -1)
+				return (-1);
+			i++;
+			tmp = data->champ;
+		}
+		else
+			tmp = tmp->next;
+	}
+	return (1);
+}
+
+t_data		*init_data(void)
 {
 	t_data *data;
 
@@ -24,9 +46,12 @@ t_data		*init_data()
 	ft_memset(data->arene, 0, 4096);
 	data->champ = NULL;
 	data->proc = NULL;
-	data->verb = 0;
 	data->dump = -1;
+	data->tour = 1;
+	data->vis = 0;
 	data->nb_champ = 0;
+	data->ctd = CYCLE_TO_DIE;
+	data->nbr_c = 0;
 	data->n = 0;
 	data->c_n[0] = 1;
 	data->c_n[1] = 2;
@@ -35,21 +60,19 @@ t_data		*init_data()
 	return (data);
 }
 
-t_champ		*new_champ()
+t_champ		*new_champ(void)
 {
 	t_champ	*champ;
 
 	if ((champ = (t_champ *)malloc(sizeof(t_champ))) == NULL)
 		return (NULL);
 	champ->n_p = 0;
-	champ->name = NULL;
-	champ->com = NULL;
 	champ->code = NULL;
 	champ->next = NULL;
 	return (champ);
 }
 
-void	add_champ(t_champ *new, t_data *data)
+void		add_champ(t_champ *new, t_data *data)
 {
 	t_champ *tmp;
 
@@ -58,12 +81,13 @@ void	add_champ(t_champ *new, t_data *data)
 	else
 	{
 		tmp = data->champ;
-		data->champ = new;
-		data->champ->next = tmp;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new;
 	}
 }
 
-void	init_champ(t_data *data)
+void		init_champ(t_data *data)
 {
 	t_champ *tmp;
 	int		i;
@@ -81,9 +105,10 @@ void	init_champ(t_data *data)
 		tmp = data->champ;
 	}
 	while (tmp)
-	{	
-		ft_memcpy((void *)&data->arene[4096 / data->nb_champ * (tmp->n_p - 1)], (void *)tmp->code, (size_t)tmp->size);
-		tmp->adr = &data->arene[4096 / data->nb_champ * (tmp->n_p - 1)];
+	{
+		ft_memcpy((void *)&data->arene[4096 / data->nb_champ *
+		(tmp->n_p - 1)], (void *)tmp->code, (size_t)tmp->size);
+		tmp->adr = (4096 / data->nb_champ * (tmp->n_p - 1));
 		tmp = tmp->next;
 	}
 }

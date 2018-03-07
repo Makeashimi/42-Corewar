@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 11:40:53 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/15 20:32:36 by varichar         ###   ########.fr       */
+/*   Updated: 2018/03/07 17:04:42 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*strcpy_untilstr(char *dst, const char *src, char *needle)
 	int i;
 
 	i = (int)ft_strstr(src, needle);
-	if (i > 0) 
+	if (i > 0)
 		i = i - (int)src;
 	ft_strncpy(dst, src, i);
 	return (dst);

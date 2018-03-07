@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/03/06 19:23:15 by jcharloi         ###   ########.fr        #
+#    Updated: 2018/03/07 16:48:07 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,32 @@ ASM_OBJ_PATH = ./Project-Asm/objects/
 ASM_OBJ_NAME = $(ASM_SRC_NAME:.c=.o)
 
 VM_SRC_PATH = ./Project-VM/sources/
-VM_SRC_NAME = main.c
+VM_SRC_NAME = main.c \
+			take_arg.c \
+			calc_ocp.c \
+			parse_champ.c \
+			init_data.c \
+			check.c \
+			check2.c \
+			list_proc.c \
+			ft_battle.c \
+			ft_add.c \
+			ft_aff.c \
+			ft_and.c \
+			ft_fork.c \
+			ft_jump.c \
+			ft_ld.c \
+			ft_lfork.c \
+			ft_live.c \
+			ft_lld.c \
+			ft_lldi.c \
+			ft_or.c \
+			ft_st.c \
+			ft_sti.c \
+			ft_sub.c \
+			ft_xor.c \
+			ft_ldi.c \
+			print_memory.c
 VM_OBJ_PATH = ./Project-VM/objects/
 VM_OBJ_NAME = $(VM_SRC_NAME:.c=.o)
 

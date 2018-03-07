@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 12:05:34 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/07 14:57:52 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 16:33:41 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	wr_header(fd, l_asm, ins);
 	wr_ins(fd, ins);
 	ft_printf("Writing output program to %s\n", cpy);
-	ft_strdel(&cpy);
+	free(cpy);
 }
 
 static int	cmp_label(t_instruction *instruction, char *str)

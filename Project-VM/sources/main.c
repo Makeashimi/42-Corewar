@@ -6,7 +6,7 @@
 /*   By: jcharloi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 17:41:35 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/10 16:46:33 by varichar         ###   ########.fr       */
+/*   Updated: 2018/01/18 17:41:46 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,146 +14,88 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "../../libft/libft.h"
+#include "corewar.h"
 
-int		ft_take_champ(unsigned char *tab, int i)
+int					push_er(char *s)
 {
-	if (tab[i - 1] == 0x00 && tab[i - 2] == 0x00 && tab[i - 3] == 0x00 && 
-		tab[i - 4] == 0x00 && tab[i - 5] == 0x00)
-		return (1);
-	return (0);
+	ft_putendl(s);
+	return (-1);
 }
 
-void 	print_memory(const void *addr, size_t size)
+void				print_tab(const void *addr, size_t size, size_t i)
 {
-	char			tab[16] = "0123456789abcdef";
+	char			tab[17];
 	unsigned char	*str;
-	size_t			i;
 	int				c;
-	int				j;
-	int				count;
 
-	count = 0;
+	ft_strcpy(tab, "0123456789abcdef");
 	str = (unsigned char*)addr;
-	i = 0;
 	while (i < size)
 	{
 		c = str[i];
-		ft_putchar(tab[c / 16]);
-		ft_putchar(tab[c % 16]);
+		if (i % 8 == 0)
+		{
+			ft_printf("%c", tab[c / 16]);
+			ft_printf("%c", tab[c % 16]);
+		}
+		else
+		{
+			ft_putchar(tab[c / 16]);
+			ft_putchar(tab[c % 16]);
+		}
 		i++;
-		count++;
 		if (i % 1 == 0)
 			ft_putchar(' ');
 		if (i % 64 == 0)
-		{
-			count = 0;
-			j = 0;
 			ft_putchar('\n');
-		}
-	}
-	if (count != 0)
-	{
-		j = 16 - count;
-		if (i % 2 == 1)
-			ft_putchar(' ');
-		while (j > 0)
-		{
-			ft_putchar(' ');
-			ft_putchar(' ');
-			if (j % 2 == 0)
-				ft_putchar(' ');
-			j--;
-		}
-		j = 0;
-		ft_putchar('\n');
 	}
 }
 
-int main(int ac, char **av)
+static int			ft_finish(t_data *data)
 {
-	unsigned char *tab;
-	unsigned char champ[4096];
-	int fd;
-	int i;
-	int n;
+	int				i;
+	t_champ			*champ;
 
-	i = 0;
-	(void)ac;
-	fd = open(av[1], O_RDONLY);
-	i = read(fd, champ, 4096);
-	printf("%d\n", i);
-	print_memory(champ, i);
-	tab = (unsigned char *)malloc(sizeof(unsigned char) * 4096);
-	n = i - 1;
-	while (ft_take_champ(champ, n) != 1)
-		n--;
-	printf("%d\n", n);
-	printf("%d\n", i);
-	memcpy(tab, &champ[n], ((size_t)i - n));
-	print_memory(tab, 4096);
+	i = data->last_l;
+	champ = data->champ;
+	if (data->dump == 0)
+		print_mem(data->arene, 4096, 0);
+	else if (i > 0 && i <= data->nb_champ2)
+	{
+		if (data->vis == 1)
+			print_tab(data->arene, 4096, 0);
+		while (i != champ->n_p)
+			champ = champ->next;
+		ft_printf("Le joueur %d(%s) a gagne\n", data->last_l, champ->name);
+	}
 	return (0);
 }
 
-//void	load_champ()
-
-void 	print_tab(const void *addr, size_t size)
+int					main(int ac, char **av)
 {
-	char			tab[16] = "0123456789abcdef";
-	unsigned char	*str;
-	size_t			i;
-	int				c;
-	int				j;
-	int				count;
+	t_data			*data;
+	int				i;
 
-	count = 0;
-	str = (unsigned char*)addr;
-	i = 0;
-	while (i < size)
-	{
-		c = str[i];
-		ft_putchar(tab[c / 16]);
-		ft_putchar(tab[c % 16]);
-		i++;
-		count++;
-		if (i % 1 == 0)
-			ft_putchar(' ');
-		if (i % 64 == 0)
-		{
-			count = 0;
-			j = 0;
-			ft_putchar('\n');
-		}
-	}
-	if (count != 0)
-	{
-		j = 16 - count;
-		if (i % 2 == 1)
-			ft_putchar(' ');
-		while (j > 0)
-		{
-			ft_putchar(' ');
-			ft_putchar(' ');
-			if (j % 2 == 0)
-				ft_putchar(' ');
-			j--;
-		}
-		j = 0;
-		ft_putchar('\n');
-	}
-}
-
-/*int main(int ac, char **av)
-{
-	t_data	*data;
-
+	i = 1;
 	if (ac < 3)
 		return (-1);
 	if ((data = init_data()) == NULL)
-		return (-1);
-	if (parse_shell(data, ac, av) == -1)
+		return (push_er("Init malloc error"));
+	if (parse_shell(data, ac, av, 1) == -1)
 		return (-1);
 	init_champ(data);
-	print_tab(data->arene, 4096);
-	return (0);
-}*/
+	launch_champ(data);
+	init_instruction(data);
+	while (data->ctd > 0 && data->dump != 0 && data->proc)
+	{
+		battle(data);
+		if (i == data->ctd && (i = 1))
+			check_to_die(data);
+		else
+			i++;
+		data->dump--;
+		if (data->ctd > 0)
+			data->tour++;
+	}
+	return (ft_finish(data));
+}

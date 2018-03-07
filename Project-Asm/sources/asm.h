@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 16:57:38 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/05 17:53:11 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 17:12:51 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_asm						*parse_instructions(t_instruction *instruction,
 int							is_label(t_instruction *instruction, char *str,
 																int o, int ret);
 int							is_confurm_label(char c);
+char						*instru(char *str);
 int							is_name_instru(t_instruction *instruction,
 																	char *str);
 t_instruction				*link_instruction(t_instruction **instruction);
@@ -89,6 +90,7 @@ int							get_byte_nb(t_instruction *ins, int i);
 void						write_output(char *str, t_asm *l_asm,
 															t_instruction *ins);
 int							find_label(char *label, char **llabel);
-
+t_asm						*create_str(char *str);
+t_asm						*link_str(t_asm *l_asm, char *str);
 
 #endif

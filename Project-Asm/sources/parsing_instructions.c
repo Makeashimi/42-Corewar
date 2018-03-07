@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:29:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/07 13:39:38 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 17:12:26 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,11 @@ t_asm			*get_tmp(t_asm *tmp)
 	return (tmp);
 }
 
-char			*instru(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == LABEL_CHAR)
-		{
-			i++;
-			if (str[i] == '\0' || str[i] == COMMENT_CHAR)
-				return (str);
-			while (ft_space(str[i]) == 1)
-				i++;
-			if (str[i] != '\0' && str[i] != COMMENT_CHAR)
-				return (str + i);
-		}
-		i++;
-	}
-	return (str);
-}
-
-static	int		count_label(t_instruction *instruction, t_asm *tmp)
+static	int		count_label(t_instruction *instruction,
+											t_asm *tmp, int i, int count)
 {
 	char	*str;
-	int		count;
-	int		i;
 
-	count = 0;
-	i = 0;
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
 	while (tmp != NULL && is_label(instruction, tmp->str + i, 0, 0) == 1)
@@ -87,6 +62,17 @@ static	int		count_label(t_instruction *instruction, t_asm *tmp)
 			i++;
 	}
 	return (count);
+}
+
+void			op(char *cpy, t_asm *tmp, t_instruction *ins, int i)
+{
+	if (is_name_instru(ins, tmp->str + i) == 0)
+		error("Syntax error with the label or the instruction");
+	cpy = tmp->str;
+	tmp->str = ft_strdup(move_to_param(tmp->str + i));
+	ft_strdel(&cpy);
+	if (check_param(ins, tmp->str) == 0)
+		error("Syntax error with the params of the instruction");
 }
 
 t_asm			*instru_next(t_asm *tmp, t_instruction *ins, int i, int o)
@@ -113,13 +99,7 @@ t_asm			*instru_next(t_asm *tmp, t_instruction *ins, int i, int o)
 			i++;
 		o++;
 	}
-	if (is_name_instru(ins, tmp->str + i) == 0)
-		error("Syntax error with the label or the instruction");
-	cpy = tmp->str;
-	tmp->str = ft_strdup(move_to_param(tmp->str + i));
-	ft_strdel(&cpy);
-	if (check_param(ins, tmp->str) == 0)
-		error("Syntax error with the params of the instruction");
+	op(cpy, tmp, ins, i);
 	return (tmp);
 }
 
@@ -134,7 +114,7 @@ t_asm			*parse_instructions(t_instruction *instruction,
 		error("Nothing found after name/comment");
 	while (ft_space(tmp->str[i]) == 1)
 		i++;
-	count = count_label(instruction, tmp);
+	count = count_label(instruction, tmp, 0, 0);
 	if (!(instruction->label = (char**)malloc(sizeof(char*) * (count + 1))))
 		error("Malloc error");
 	instruction->label[count] = NULL;
