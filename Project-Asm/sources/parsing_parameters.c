@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 15:22:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/02/23 12:41:10 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 14:36:40 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char		*move_str(t_instruction *instruction, char *s, int i, int j)
 	}
 	while (s[j] != '\0' && s[j] != SEPARATOR_CHAR)
 		j++;
+	if (s[j] == '\0')
+		return (s + j);
 	j++;
 	while (ft_space(s[j]) == 1)
 		j++;

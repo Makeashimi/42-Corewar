@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 14:29:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/06 21:40:22 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 13:39:38 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ t_asm			*instru_next(t_asm *tmp, t_instruction *ins, int i, int o)
 		cpy = tmp->str;
 		tmp->str = ft_strdup(instru(tmp->str + i));
 		if (ft_strcmp(cpy, tmp->str) != 0)
+		{
+			ft_strdel(&cpy);
 			break ;
+		}
 		ft_strdel(&cpy);
 		tmp = tmp->next;
 		while (tmp != NULL && is_all_space(tmp->str) == 1)
@@ -110,7 +113,6 @@ t_asm			*instru_next(t_asm *tmp, t_instruction *ins, int i, int o)
 			i++;
 		o++;
 	}
-	ft_strdel(&cpy);
 	if (is_name_instru(ins, tmp->str + i) == 0)
 		error("Syntax error with the label or the instruction");
 	cpy = tmp->str;
