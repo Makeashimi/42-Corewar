@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 12:05:34 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/03/06 22:11:20 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 13:17:56 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,17 @@ void		write_output(char *str, t_asm *l_asm, t_instruction *ins)
 	char	*cpy;
 	int		fd;
 
-	(void)l_asm;
-	(void)ins;
-	//ft_printf("str %s\n", str);
 	if (!(cpy = (char*)malloc(sizeof(char) * (ft_strlen(str) + 5))))
 		error("Malloc error");
+	ft_bzero(cpy, ft_strlen(str) + 5);
 	cpy = strcpy_untilstr(cpy, str, ".s\0");
-	ft_printf("str %s\n", cpy);
 	cpy = ft_strcat(cpy, ".cor");
 	fd = open(cpy, O_RDWR | O_CREAT | O_TRUNC, FILE_RIGHTS);
 	assign_size_ins(ins);
 	wr_header(fd, l_asm, ins);
 	wr_ins(fd, ins);
 	ft_printf("Writing output program to %s\n", cpy);
-	ft_strdel(&cpy);
+	free(cpy);
 }
 
 static int	cmp_label(t_instruction *instruction, char *str)
@@ -82,7 +79,6 @@ void		check_label(t_instruction *instruction, t_asm *l_asm,
 			if (cmp_label(instruction, tmp->param[2] + 1) == 0)
 				error("Wrong label name");
 		}
-		
 		tmp = tmp->next;
 	}
 	write_output(argv[argc - 1], l_asm, instruction);

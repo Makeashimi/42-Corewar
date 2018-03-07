@@ -89,6 +89,7 @@ int							get_byte_nb(t_instruction *ins, int i);
 void						write_output(char *str, t_asm *l_asm,
 															t_instruction *ins);
 int							find_label(char *label, char **llabel);
-
+t_asm						*create_str(char *str);
+t_asm						*link_str(t_asm *l_asm, char *str);
 
 #endif
