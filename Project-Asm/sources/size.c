@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 16:30:18 by varichar          #+#    #+#             */
-/*   Updated: 2018/03/06 22:04:25 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/07 16:25:40 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,3 +90,4 @@ t_asm	*link_str(t_asm *l_asm, char *str)
 	tmp->next = create_str(str);
 	return (l_asm);
 }
+
