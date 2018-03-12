@@ -6,13 +6,13 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/18 11:44:59 by jcharloi          #+#    #+#              #
-#    Updated: 2018/03/07 16:48:07 by jcharloi         ###   ########.fr        #
+#    Updated: 2018/03/12 17:40:41 by varichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = GCC
 DEBUGFLAGS = -ggdb
-CFLAGS = -Wall -Wextra -Werror -MMD -g
+CFLAGS = -Wall -Wextra -Werror -MMD
 NAME1 = asm
 NAME2 = corewar
 
@@ -48,7 +48,7 @@ VM_SRC_NAME = main.c \
 			ft_and.c \
 			ft_fork.c \
 			ft_jump.c \
-			ft_ld.c \
+						ft_ld.c \
 			ft_lfork.c \
 			ft_live.c \
 			ft_lld.c \

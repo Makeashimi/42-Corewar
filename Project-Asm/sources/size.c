@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/11 16:30:18 by varichar          #+#    #+#             */
-/*   Updated: 2018/03/07 16:41:06 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:33:43 by varichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	assign_size_ins(t_instruction *ins)
 		if (ins->name)
 			ins->size += (g_op_tab[(int)ins->index].ocp ? 1 : 0);
 		i = 0;
-		while (ins->param[i])
+		while (ins->param[i] && i < 3)
 		{
 			ins->size += (ins->type[i] == 1) ? 1 : 0;
 			if (ins->type[i] == 2)
